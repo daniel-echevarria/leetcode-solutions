@@ -16,5 +16,4 @@ Each problem is stored in its respective language folder.
 node JavaScript/two-sum.js
 
 ### Ruby
-```sh
 ruby Ruby/two_sum.rb
