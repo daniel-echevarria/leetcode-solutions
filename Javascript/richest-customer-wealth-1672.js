@@ -41,12 +41,10 @@
 // return richest
 
 const maximumWealth = (accounts) => {
-  let richest = 0;
-  accounts.forEach((element) => {
-    const sum = element.reduce((a, b) => a + b, 0);
-    if (sum > richest) richest = sum;
-  });
-  return richest;
+  return accounts.reduce((acc, current) => {
+    const sum = current.reduce((a, b) => a + b);
+    return acc > sum ? acc : sum;
+  }, 0);
 };
 
 const ex1 = maximumWealth([
