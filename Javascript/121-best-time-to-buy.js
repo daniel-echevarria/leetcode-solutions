@@ -1,38 +1,24 @@
-var maxProfit = function (prices) {
-  let buyDay = 0;
-  let sellDay = -1;
-  let i = 1;
-  let j = -2;
+const maxProfit = (prices) => {
+  let bestPrice = prices[0];
   let maxProfit = 0;
-  let keepGoing = true;
-  while (keepGoing) {
-    if (prices.length + j > i) {
-      if (prices.at(j) > prices.at(sellDay)) sellDay = j;
+  for (let i = 1; i < prices.length; i++) {
+    if (prices[i] < bestPrice) bestPrice = prices[i];
+    if (prices[i] > bestPrice) {
+      let currentProfit = prices[i] - bestPrice;
+      if (currentProfit > maxProfit) maxProfit = currentProfit;
     }
-    if (i > prices.length + sellDay) break;
-    if (prices[i] < prices[buyDay]) buyDay = i;
-    i++;
-    j--;
-    if (buyDay > prices.length + j) keepGoing = false;
-    if (prices.length + sellDay < i) keepGoing = false;
   }
-  const currentProfit = prices.at(sellDay) - prices[buyDay];
-  if (currentProfit > maxProfit) maxProfit = currentProfit;
   return maxProfit;
 };
 
-// maxProfit([7, 1, 5, 3, 6, 4]);
-// maxProfit([1, 4, 2]);
-// maxProfit([3, 2, 6, 5, 0, 3]);
-maxProfit([7, 4, 1, 2]);
-// maxProfit([2, 1, 2, 1, 0, 0, 1]);
+maxProfit([7, 1, 5, 3, 6, 4]);
+maxProfit([7, 6, 4, 3, 1]);
 
-// Given a list of prices
-// declare buyDayIndex with a value of 0
-// declare sellDayIndex with a value of -1
-// declare a variable i with value 1
-// declare a variable j with value -2
-// loop until i is bigger or equal to sellDayIndex
-// at each round compare the value at i with the value at buyDayIndex if it's smaller update buyDayIndex with i
-// compare j with the value of sellIndex if it's bigger update sellIndex
-// return the value at sellIndex minus the value at buyDayIndex
+// Given an array of prices
+// declare the bestPrice the value of the first element
+// declare maxProfit to 0
+// iterate through the array from the second element
+// if the current element is smaller than the bestPrice, update bestPrice with it
+// if it's bigger check the difference between that price and the bestPrice
+// if it's bigger than maxProfit update max Profit
+// return maxProfit
