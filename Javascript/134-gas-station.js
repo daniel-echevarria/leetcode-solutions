@@ -67,39 +67,76 @@
 // from the two array make a total array by subtracting cost from gas for each index
 // passed through the array twice keeping note of the steps and the total
 
-const gas = [1, 2, 3, 4, 5];
-const cost = [3, 4, 5, 1, 2];
-// const gas = [2, 3, 4];
-// const cost = [3, 4, 3];
+// const isPossibleToGoAround = (i, total) => {
+//   const n = total.length;
+//   let keepGoing = true;
+//   let steps = 0;
+//   let gasAvailable = 0;
+//   let index = i;
+//   while (keepGoing) {
+//     gasAvailable += total[i];
+//     steps++;
+//     index++;
+//     if (index > n - 1) index = 0;
+//     if (gasAvailable < 0) return false;
+//     if (steps === n) return true;
+//   }
+// };
 
-const isPossibleToGoAround = (i, total) => {
-  const n = total.length;
-  let keepGoing = true;
-  let steps = 0;
-  let gasAvailable = 0;
-  let index = i;
-  while (keepGoing) {
-    gasAvailable += total[i];
-    steps++;
-    index++;
-    if (index > n - 1) index = 0;
-    if (gasAvailable < 0) return false;
-    if (steps === n) return true;
-  }
-};
+// const canCompleteCircuit = (gas, cost) => {
+//   const total = gas.map((val, i) => val - cost[i]);
+//   let answer = -1;
+//   let i = 0;
+//   while (i < total.length) {
+//     if (isPossibleToGoAround(i, total)) {
+//       answer = i;
+//       return answer;
+//     }
+//     i++;
+//   }
+//   return answer;
+// };
+
+// console.log(canCompleteCircuit(gas, cost));
+
+// Optimized Algo
+// Given two arrays of costs and gas
+// declare a variable availableGas with an initial value of 0
+// declare a variable totalGas
+// declare a variable bestStation with a value of -1
+// Iterate through the gas stations
+// at each step check the station total
+// if the total is positive and the availableGas is 0
+// bestStation gets the current index
+// if the availableGas is bigger than 0 add the station total to it
+// if the availableGAs is smaller than 0
+// it gets 0 and bestStation gets -1
+
+// const gas = [1, 2, 3, 4, 5];
+// const cost = [3, 4, 5, 1, 2];
+const gas = [2, 3, 4];
+const cost = [3, 4, 3];
 
 const canCompleteCircuit = (gas, cost) => {
-  const total = gas.map((val, i) => val - cost[i]);
-  let answer = -1;
-  let i = 0;
-  while (i < total.length) {
-    if (isPossibleToGoAround(i, total)) {
-      answer = i;
-      return answer;
+  const n = gas.length;
+  let availableGas = 0;
+  let bestStation = 0;
+  let totalGas = 0;
+  for (let i = 0; i < n; i++) {
+    let stationTotal = gas[i] - cost[i];
+    if (stationTotal > 0 && availableGas === 0) {
+      bestStation = i;
+      availableGas = stationTotal;
+    } else {
+      if (availableGas > 0) availableGas += stationTotal;
     }
-    i++;
+    if (availableGas < 0) {
+      availableGas = 0;
+      bestStation = -1;
+    }
+    totalGas += stationTotal;
   }
-  return answer;
+  return totalGas > -1 ? bestStation : -1;
 };
 
 console.log(canCompleteCircuit(gas, cost));
