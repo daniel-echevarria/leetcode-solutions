@@ -114,21 +114,22 @@
 
 // const gas = [1, 2, 3, 4, 5];
 // const cost = [3, 4, 5, 1, 2];
-const gas = [2, 3, 4];
-const cost = [3, 4, 3];
+// const gas = [2, 3, 4];
+// const cost = [3, 4, 3];
+let gas = [2];
+let cost = [2];
 
 const canCompleteCircuit = (gas, cost) => {
   const n = gas.length;
   let availableGas = 0;
-  let bestStation = 0;
+  let bestStation = -1;
   let totalGas = 0;
   for (let i = 0; i < n; i++) {
     let stationTotal = gas[i] - cost[i];
-    if (stationTotal > 0 && availableGas === 0) {
+    if (availableGas > 0) availableGas += stationTotal;
+    if (availableGas === 0 && stationTotal > -1) {
       bestStation = i;
       availableGas = stationTotal;
-    } else {
-      if (availableGas > 0) availableGas += stationTotal;
     }
     if (availableGas < 0) {
       availableGas = 0;
