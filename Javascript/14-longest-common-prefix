@@ -1,0 +1,31 @@
+const findPrefix = (str, strs) => {
+  if (str === "") return str;
+  const n = str.length;
+  const hasStringAsPrefix = (current) => current.substring(0, n) == str;
+  const isPresentInAll = strs.every(hasStringAsPrefix);
+  if (isPresentInAll) return str;
+  str = str.substring(0, n - 1);
+  return findPrefix(str, strs);
+};
+
+var longestCommonPrefix = function (strs) {
+  const shortest = strs.reduce((acc, current) =>
+    acc.length > current.length ? current : acc
+  );
+  return findPrefix(shortest, strs);
+};
+
+const strs = ["flower", "flow", "flight"];
+const res = longestCommonPrefix(strs);
+console.log(res);
+
+// Algo longestCommonPrefix
+// find the shortest word
+// call findPrefix on that word
+
+// Algo findPrefix
+// given a string and an array of strings
+// if the string is empty return the string
+// Check if all the strings in the array start with that string
+// if it's true return that string
+// otherwise call findPrefix with the string minus the last letter
