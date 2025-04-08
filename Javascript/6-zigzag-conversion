@@ -1,0 +1,62 @@
+var convert = function (s, numRows) {
+  const n = s.length;
+  if (numRows === 1) return s;
+  if (n <= numRows) return s;
+  const matrix = Array.from({ length: n }, () =>
+    Array.from({ length: numRows }, () => "")
+  );
+  let goingForward = true;
+  let row = 0;
+  let col = 0;
+  for (let i = 0; i < n; i++) {
+    if (goingForward) {
+      matrix[row][col] = s[i];
+      col++;
+      if (col === numRows - 1) goingForward = false;
+    } else {
+      matrix[row][col] = s[i];
+      row++;
+      col--;
+      if (col === 0) goingForward = true;
+    }
+  }
+  // const relevant = matrix.filter((a) => !a.every((x) => x == ""));
+  const result = [];
+  for (let i = 0; i < matrix.length; i++) {
+    matrix.forEach((a) => result.push(a[i]));
+  }
+  const clean = result.filter((x) => x !== "" && x !== undefined);
+  return clean.join("");
+};
+
+const res = convert("PAYPALISHIRING", 4);
+console.log(res);
+
+const res2 = convert("PAYPALISHIRING", 3);
+console.log(res2);
+
+const res3 = convert("AB", 2);
+console.log(res3);
+
+const res4 = convert("ABCD", 3);
+console.log(res4);
+
+// Given a string s and a number of rows numRows
+// Create a matrix with as many empty arrays as letters in s
+// Declare a variable goingForward with an initial value of true
+// declare a variable row with an initial value of 0
+// declare a variable col with an initial value of 0
+// declare a variable result with an empty array
+// Iterate through the string
+// if goingForward is true
+// the current letter goes to matrix[row][col]
+// col gets +1
+// if col equals numRows goingForward gets false
+// if goingForward is false
+// col gets -1
+// row gets +1
+// current letter goes to matrix[row][col]
+// if col equals -1 goingForward gets true
+// after the iteration turn the matrix around
+// and push each row to the result array
+// return the joined result
