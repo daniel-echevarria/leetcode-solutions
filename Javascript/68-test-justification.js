@@ -11,6 +11,15 @@
 // add the current word length to letterCount
 // push a white space
 
+// Algo to justifyLine
+// Given a string and a width
+// declare a variable result []
+// pop the numWhiteSpaces from the line
+// if there is only one word, or two words, add that many white spaces after the first word and return
+// create a loop that adds a white space after each words
+// unless the word is the last one of the array
+// return the result
+
 const justifyLine = (line) => {
   let numWhiteSpaces = line.pop();
   const whiteSpaces = Array.from({ length: numWhiteSpaces }, () => " ");
@@ -29,6 +38,20 @@ const justifyLine = (line) => {
     numWhiteSpaces--;
   }
   return line.flat().join("");
+};
+
+const justifyLeft = (line) => {
+  let numWhiteSpaces = line.pop();
+  const whiteSpaces = Array.from({ length: numWhiteSpaces }, () => " ");
+  if (line.length < 2) {
+    line.splice(1, 0, whiteSpaces);
+    return line.flat().join("");
+  }
+  const spacedLine = line.map((x, i) => {
+    if (i === line.length - 1) return x + whiteSpaces.join("");
+    return x + whiteSpaces.pop();
+  });
+  return spacedLine.flat().join("");
 };
 
 const verses = (words, maxWidth) => {
@@ -61,20 +84,18 @@ const verses = (words, maxWidth) => {
 
 var fullJustify = function (words, maxWidth) {
   const broken = verses(words, maxWidth);
-  const solution = broken.map((x) => justifyLine(x));
+  const solution = broken.map((x, i) => {
+    if (i === broken.length - 1) return justifyLeft(x);
+    return justifyLine(x);
+  });
   return solution;
 };
 
-// const justifyLine
+// const left = justifyLeft(["shall", "be", 9]);
 
-// Algo to justifyLine
-// Given a string and a width
-// declare a variable result []
-// pop the numWhiteSpaces from the line
-// if there is only one word, or two words, add that many white spaces after the first word and return
-// create a loop that adds a white space after each words
-// unless the word is the last one of the array
-// return the result
+// Algo justifyLeft
+// Given a line, pop the number of white spaces
+// add one after each word and all the rest after the last word
 
 // const just = justifyLine(["understand", "well", 6]);
 // console.log(just);
