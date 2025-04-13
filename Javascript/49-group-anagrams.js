@@ -1,35 +1,3 @@
-const isAnagram = (a, b) => {
-  const firstString = a.split("").sort().join("");
-  const secondString = b.split("").sort().join("");
-  return firstString === secondString;
-};
-
-// Algo isAnagram
-// Takes two strings
-// return false if the strings do not have the same length
-// split both strings into arrays of characters
-// sort the arrays
-// join the strings again
-// see if they are the same
-
-// var isAnagram = function (s, t) {
-//   const hash = new Map();
-//   if (!(s.length === t.length)) return false;
-//   // Iterate through s and map each letter to a count
-//   for (let i = 0; i < s.length; i++) {
-//     const letter = s[i];
-//     hash.set(letter, (hash.get(letter) || 0) + 1);
-//   }
-//   // Iterate trough t and remove from the count
-//   for (let i = 0; i < t.length; i++) {
-//     const letter = t[i];
-//     if (!hash.has(letter) || hash.get(letter) < 1) return false;
-//     hash.set(letter, hash.get(letter) - 1);
-//   }
-
-//   return true;
-// };
-
 var groupAnagrams = function (strs) {
   const groups = new Map();
   const result = [];
