@@ -7,7 +7,6 @@ var longestConsecutive = function (nums) {
   let maxSequence = 0;
   let currentSequence = 1;
   for (let i = 1; i < n; i++) {
-    console.log(sorted[i - 1] + 1 === sorted[i]);
     if (sorted[i - 1] === sorted[i]) continue;
     if (sorted[i - 1] + 1 === sorted[i]) {
       currentSequence++;
