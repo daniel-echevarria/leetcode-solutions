@@ -23,7 +23,6 @@ console.log(summaryRanges([0, 2, 3, 4, 6, 8, 9]));
 // Algo
 // declare a variable result with an initial value of []
 // declare a variable rangeStart with an initial value of 0
-// declare a variable i with an initial value of 1
 // declare a variable currentRange with an initial value of ''
 // Iterate through nums
 // If nums[i - 1] + 1 is not equal to nums[i]
@@ -33,6 +32,3 @@ console.log(summaryRanges([0, 2, 3, 4, 6, 8, 9]));
 // push the string to the result array
 // currentString gets ''
 // rangeStart gets i
-// i gets ++
-// If it is
-// i++
