@@ -9,15 +9,13 @@ var findMinArrowShots = function (points) {
   for (let i = 1; i < points.length; i++) {
     const last = result[result.length - 1];
     const curr = points[i];
-    console.log(last, currf);
     if (overlap(last, curr)) {
       result.pop();
-      result.push(merge(last, curr));
+      result.push([last[0], Math.min(last[1], curr[1])]);
       continue;
     }
     result.push(curr);
   }
-  console.log(result);
   return result.length;
 };
 
@@ -29,3 +27,25 @@ console.log(
     [7, 12],
   ])
 );
+
+console.log(
+  findMinArrowShots([
+    [3, 9],
+    [7, 12],
+    [3, 8],
+    [6, 8],
+    [9, 10],
+    [2, 9],
+    [0, 9],
+    [3, 9],
+    [0, 6],
+    [2, 8],
+  ])
+);
+
+// Algo
+// Sort the points based on the start
+// declare a variable result with an initial value of an array with the first point
+// Iterate through the points
+// if the point overlaps with the last value of result do nothing
+// otherwise push the current value
