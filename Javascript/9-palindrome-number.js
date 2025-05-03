@@ -1,0 +1,1 @@
+var isPalindrome = function (x) {};
