@@ -1,29 +1,38 @@
-var reverseBetween = function (head, left, right) {
-  const leftIndex = left - 1;
-  const rightIndex = right - 1;
-  const nodesArray = [];
-  while (head) {
-    nodesArray.push(head);
-    head = head.next;
+const reverseBetween = (head, left, right) => {
+  if (left === right) return head;
+  if (right === 2) {
+    let tempRight = head.next;
+    head.next = tempRight.next;
+    tempRight.next = head;
+    return tempRight;
   }
-  if (nodesArray.length < 2) return head;
-  console.log(nodesArray);
-  // Swap the nodes in the array
-  const tempLeftNode = nodesArray[leftIndex];
-  nodesArray[leftIndex] = nodesArray[rightIndex];
-  nodesArray[rightIndex] = tempLeftNode;
-
-  if (!leftIndex === 0) nodesArray[leftIndex - 1].next = nodesArray[leftIndex];
-  nodesArray[leftIndex].next = nodesArray[leftIndex + 1];
-  nodesArray[rightIndex - 1].next = nodesArray[rightIndex];
-  nodesArray[rightIndex].next = nodesArray[rightIndex + 1] || null;
-  return nodesArray[0];
+  let leftPre;
+  let leftNode;
+  let previousNode = null;
+  let currentNode = head;
+  let count = 1;
+  const dummy = head;
+  while (currentNode) {
+    if (left === count) {
+      leftNode = currentNode;
+      leftPre = previousNode;
+    }
+    if (right === count) {
+      if (leftPre) leftPre.next = currentNode;
+      const tempPostR = currentNode.next;
+      if (right - left === 1) {
+        currentNode.next = leftNode;
+        leftNode.next = tempPostR;
+      } else {
+        currentNode.next = leftNode.next;
+        previousNode.next = leftNode;
+        leftNode.next = tempPostR;
+        if (!leftPre) return currentNode;
+      }
+    }
+    previousNode = currentNode;
+    currentNode = currentNode.next;
+    count++;
+  }
+  return dummy;
 };
-
-// Algo
-// given the head of a linked list and two integers left and right
-// Declare a variable leftIndex that gets left - 1
-// Declare a variable rightIndex that gets right - 1
-// traverse the linked list and store the nodes inside a nodesArray
-// swap the two nodes in the array
-// adjust the next for the 4 nodes, the two before and the two swapped
