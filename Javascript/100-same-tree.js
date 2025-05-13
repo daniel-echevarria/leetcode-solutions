@@ -1,8 +1,12 @@
 var isSameTree = function (p, q) {
-  if (p.val !== q.val) return false;
-  const resultLeft = isSameTree(p.left, q.left);
-  const resultRight = isSameTree(p.right, q.right);
-  return resultLeft && resultRight;
+  if (!p && !q) return true;
+  if (p && !q) return false;
+  if (q && !p) return false;
+  return (
+    p.val === q.val &&
+    isSameTree(p.left, q.left) &&
+    isSameTree(p.right, q.right)
+  );
 };
 
 // Given two root nodes of binary trees
