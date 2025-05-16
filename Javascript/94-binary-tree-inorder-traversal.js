@@ -10,6 +10,23 @@ var inorderTraversal = function (root) {
   return visited;
 };
 
+const visited = [];
+const iterative = (root) => {
+  let keepGoing = true;
+  let curr = root;
+  let prev = root;
+  while (keepGoing) {
+    let left = curr.left;
+    let right = curr.right;
+    if (!left && !right) {
+      visited.push(curr.val);
+    }
+    if (left) {
+      curr = left;
+      continue;
+    }
+  }
+};
 // Given the root of a tree give it's inorder traversal
 // Declare a variable visited that gets an empty array
 // If the root is a leaf (left is null and right is null)
