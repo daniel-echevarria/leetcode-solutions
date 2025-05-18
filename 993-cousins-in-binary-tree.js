@@ -1,24 +1,35 @@
 var isCousins = function (root, x, y) {
-  const visited = [];
   const queue = [root];
-  const DFS = (root) => {
+  let xDepth;
+  let yDepth;
+  let sameParent = false;
+  const DFS = (root, depth = 0) => {
     if (!root) return;
-    visited.push(queue.shift().val);
+    if (root.val === x) xDepth = depth;
+    if (root.val === y) yDepth = depth;
     root.left && queue.push(root.left);
     root.right && queue.push(root.right);
-    DFS(root.left);
-    DFS(root.right);
+    if (root.left && root.right) {
+      if (
+        (root.left.val === x && root.right.val === y) ||
+        (root.left.val === y && root.right.val === x)
+      ) {
+        sameParent = true;
+      }
+    }
+    depth++;
+    DFS(root.left, depth);
+    DFS(root.right, depth);
   };
   DFS(root);
+  if (sameParent) return false;
+  return xDepth === yDepth;
 };
 
-// Given the root of a binary tree and two nodes on that tree x and y
-// tell if the nodes ares cousins (different parents but same generation/level)
-// Algo:
-// Declare a string visited
-// Iterate through the array DFS
-// adding the visited values to the string
-// when changing levels add # to the string
-// after visiting the tree
-// split the string at #
-// find the array containing x and check if it also contains y
+// Given the root of a binary tree and the values of two nodes in the tree
+// Traverse the tree BFS
+// check if the root has a left child
+// if it does check if the child has the value of x
+// if it does xParent gets root
+// check if the child has the value of y
+// if it does yParent gets
