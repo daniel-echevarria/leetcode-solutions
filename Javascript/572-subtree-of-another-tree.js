@@ -1,7 +1,7 @@
 const isSameTree = (a, b) => {
-  if (a === null && b === null) return true;
-  if (a && b === null) return false;
-  if (a === null && b) return false;
+  if (!a && !b) return true;
+  if (a && !b) return false;
+  if (!a && b) return false;
   return (
     a.val === b.val &&
     isSameTree(a.left, b.left) &&
@@ -14,15 +14,13 @@ var isSubtree = function (root, subRoot) {
   let isSubtree = false;
   const BFS = (root) => {
     if (!root) return;
-    if (isSameTree(root, subRoot)) isSubtree = true;
+    if (isSameTree(root, subRoot)) {
+      isSubtree = true;
+      return;
+    }
     BFS(root.left);
     BFS(root.right);
   };
   BFS(root);
   return isSubtree;
 };
-
-// Algo
-// Use BFS and compare the current val to the subRoot val
-// if they are the same recursively compare the values of all the descendents
-//
