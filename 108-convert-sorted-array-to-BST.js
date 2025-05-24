@@ -1,9 +1,14 @@
 var sortedArrayToBST = function (nums) {
-  const placedNode = (root, val) => {
+  const placedNode = (val, root = null) => {
     if (!root) return new TreeNode(val);
-    if (val < root.val) root.left = placedNode(root.left, val);
-    if (val > root.val) root.right = placedNode(root.right, val);
+    if (val < root.val) root.left = placedNode(val, root.left);
+    if (val > root.val) root.right = placedNode(val, root.right);
   };
+
+  for (let num in nums) {
+    placedNode(num);
+  }
+  return root;
 };
 
 // Algo
