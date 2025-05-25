@@ -1,0 +1,1 @@
+var isBalanced = function (root) {};
