@@ -1,24 +1,20 @@
-// const nodes = [];
-// const queue = [];
-
-// var connect = function (root) {
-//   if (!root) return;
-//   nodes.push(queue.pop());
-//   queue.unshift(root.left);
-//   queue.unshift(root.right);
-//   connect(root.left);
-//   connect(root.right);
-// };
-
-const visited = [];
-const queue = [];
-
-const connect = (root) => {
-  if (!root) return;
-  visited.push(queue.pop());
-  queue.push(root.right);
-  queue.push(root.left);
-  connect(root.left);
-  connect(root.right);
-  console.log(visited);
+var connect = function (root) {
+  if (!root) return root;
+  const queue = [root];
+  while (queue.length) {
+    const size = queue.length;
+    const nextRow = [];
+    for (let i = 0; i < size; i++) {
+      const node = queue.shift();
+      if (queue.length) node.next = queue[0];
+      node.left && nextRow.push(node.left);
+      node.right && nextRow.push(node.right);
+    }
+    queue.push(...nextRow);
+  }
+  return root;
 };
+
+// Use BFS
+// At each stage, shift and point to the next
+// If it's empty point to null
