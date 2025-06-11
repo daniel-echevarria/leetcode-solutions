@@ -18,8 +18,15 @@ var flatten = function (root) {
 // const flatten = (root) => {
 //   const DFS = (node) => {
 //     if (!node) return;
-//     if (node.left.left === null && node.left.rightl)
+//     if (node.left && node.left.left === null && node.left.right === null) {
+//       const tempo = node.right;
+//       node.right = node.left;
+//       node.left = null;
+//       node.right.right = tempo;
+//     }
+//     const left = DFS(node.left);
 //   };
+//   DFS(root);
 // };
 
 // If the left node is a leaf
