@@ -1,20 +1,22 @@
 var lowestCommonAncestor = function (root, p, q) {
-  const DFS = (node, goal, path = []) => {
-    if (path.includes(goal)) return path;
+  let pPath = null;
+  let qPath = null;
+  let myMap = new Map();
+  const DFS = (node, path = "") => {
+    if (qPath && pPath) return;
     if (!node) return;
-    path.push(node);
-    if (node === goal) return path;
-    const left = DFS(node.left, goal, path);
-    const right = DFS(node.right, goal, path);
-    return left || right;
+    myMap[node.val] = node;
+    path += node.val.toString() + ",";
+    if (node === p) pPath = path.split(",");
+    if (node === q) qPath = path.split(",");
+    DFS(node.left, path);
+    DFS(node.right, path);
   };
-  const qPath = DFS(root, q);
-  const pPath = DFS(root, p);
-  console.log(qPath, pPath);
+  DFS(root);
+  let lca = root.val;
+  for (let i = 0; i < qPath.length; i++) {
+    if (qPath[i] !== pPath[i]) break;
+    lca = qPath[i];
+  }
+  return myMap[lca];
 };
-
-// Find p in the tree and keep track of the path
-// if q exists in the path return q
-// otherwise find q in the three and keep track of the path
-// once both path are found
-// Iterate through the path until they differ and return the last common path
