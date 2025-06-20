@@ -1,63 +1,40 @@
 var spiralOrder = function (matrix) {
-  let m = matrix.length;
-  let n = matrix[0].length;
-  let row = 0;
-  let col = 0;
-  let indexes = [];
-  let rowDirection = 1;
-  let colDirection = 1;
-  while (indexes.length < m * n) {
-    while (col < n) {
-      indexes.push([row, col]);
-      col++;
-    }
-    col--;
-    row++;
-    while (row < m) {
-      indexes.push([row, col]);
-      row++;
-    }
-    row--;
-    col--;
-    while (col > -1) {
-      indexes.push([row, col]);
-      col--;
-    }
-    col++;
-    row--;
-    while (row > 0) {
-      indexes.push([row, col]);
-      row--;
-    }
+  const elements = [];
+  const matrixNavigation = {
+    row: 0,
+    col: 0,
+    getCurrentPosition: () =>
+      matrix[matrixNavigation.col][matrixNavigation.row],
+    moveRight: () => matrixNavigation.row++,
+    moveLeft: () => matrixNavigation.row--,
+    moveDown: () => matrixNavigation.col++,
+    moveUp: () => matrixNavigation.col--,
+  };
+  const matrixSize = matrix.length * matrix[0].length;
+  count = 0;
+  while (matrixNavigation.getCurrentPosition()) {
+    elements.push(matrixNavigation.getCurrentPosition());
+    matrixNavigation.moveRight();
   }
-
-  return indexes;
+  matrixNavigation.moveLeft();
+  while (matrixNavigation.getCurrentPosition()) {
+    console.log(matrixNavigation.getCurrentPosition());
+    elements.push(matrixNavigation.getCurrentPosition());
+    matrixNavigation.moveDown();
+  }
+  console.log(elements);
 };
 
-// Algo
-// declare a variable m that gets matrix length
-// declare a variable n that gets matrix[0].length
-// declare a variable row that gets 0
-// declare a variable col that gets 0
-// declare an empty array indexes []
-// declare a rowDirection with initial value of 1
-// declare a colDirection with initial value of 1
-// Launch a loop that stops when the length of indexes is the same m * n
-// while the col number is smaller than the n
-// push [row, col]
-// after add one to row
-// while the row number is smaller than m
-// push [row, col]
-// after remove one from col
-// while the col number is bigger than -1
-// push [row, col]
-// after remove one from row
-// while the row is
+spiralOrder([
+  [1, 2, 3],
+  [4, 5, 6],
+  [7, 8, 9],
+]);
 
-console.log(
-  spiralOrder([
-    [1, 2, 3],
-    [4, 5, 6],
-    [7, 8, 9],
-  ])
-);
+// Declare an array elements
+// Declare an initial coordinates of { 0, 0 }
+// Iterate through the matrix following this pattern go as right as possible while collecting the elements
+// go as down as possible while connecting the elements
+// go as left as possible while collecting the elements
+// go as up as possible while collecting the elements
+// keep going until no more elements
