@@ -1,40 +1,44 @@
 var spiralOrder = function (matrix) {
+  let top = 0;
+  let bottom = matrix.length - 1;
+  let left = 0;
+  let right = matrix[0].length - 1;
+
   const elements = [];
-  const matrixNavigation = {
-    row: 0,
-    col: 0,
-    getCurrentPosition: () =>
-      matrix[matrixNavigation.col][matrixNavigation.row],
-    moveRight: () => matrixNavigation.row++,
-    moveLeft: () => matrixNavigation.row--,
-    moveDown: () => matrixNavigation.col++,
-    moveUp: () => matrixNavigation.col--,
-  };
-  const matrixSize = matrix.length * matrix[0].length;
-  count = 0;
-  while (matrixNavigation.getCurrentPosition()) {
-    elements.push(matrixNavigation.getCurrentPosition());
-    matrixNavigation.moveRight();
+  while (top <= bottom && left <= right) {
+    for (let i = left; i <= right; i++) {
+      elements.push(matrix[top][i]);
+    }
+    top++;
+
+    for (let i = top; i <= bottom; i++) {
+      elements.push(matrix[i][right]);
+    }
+    right--;
+
+    if (top <= bottom) {
+      for (let i = right; i >= left; i--) {
+        elements.push(matrix[bottom][i]);
+      }
+      bottom--;
+    }
+
+    if (left <= right) {
+      for (let i = bottom; i >= top; i--) {
+        elements.push(matrix[i][left]);
+      }
+      left++;
+    }
   }
-  matrixNavigation.moveLeft();
-  while (matrixNavigation.getCurrentPosition()) {
-    console.log(matrixNavigation.getCurrentPosition());
-    elements.push(matrixNavigation.getCurrentPosition());
-    matrixNavigation.moveDown();
-  }
-  console.log(elements);
+  return elements;
 };
 
-spiralOrder([
-  [1, 2, 3],
-  [4, 5, 6],
-  [7, 8, 9],
-]);
-
-// Declare an array elements
-// Declare an initial coordinates of { 0, 0 }
-// Iterate through the matrix following this pattern go as right as possible while collecting the elements
-// go as down as possible while connecting the elements
-// go as left as possible while collecting the elements
-// go as up as possible while collecting the elements
-// keep going until no more elements
+// Declare four 'layers' top, right, bottom, left with the values based on the
+// m and n
+// Loop while left is smaller than right and top is bigger than bottom
+// inside the loop iterate through from left to right
+// then from top to bottom
+// then from right to left
+// then from bottom to top
+// pushing the elements to an array
+// after each iteration remove one from the layer or add one depending on the case
