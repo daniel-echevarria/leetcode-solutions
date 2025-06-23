@@ -1,36 +1,29 @@
 var jump = function (nums) {
+  const n = nums.length;
+  if (n < 2) return 0;
   let numJumps = 0;
   let currentIndex = 0;
-  let bestJumpIndex = 0;
-  if (nums.length < 2) return numJumps;
-  let bestJumpValue = 0;
-
-  while (nums[currentIndex] + currentIndex < nums.length - 1) {
-    for (let j = 1; j <= nums[currentIndex]; j++) {
-      if (nums[currentIndex + j] + currentIndex + j >= bestJumpValue) {
-        bestJumpValue = nums[currentIndex + j];
-        bestJumpIndex = currentIndex + j;
+  while (currentIndex + nums[currentIndex] < n - 1) {
+    const jumpSize = nums[currentIndex];
+    const bestSpot = { index: 0, value: 0 };
+    for (let i = currentIndex + 1; i <= currentIndex + jumpSize; i++) {
+      if (i + nums[i] > bestSpot.value + bestSpot.index) {
+        bestSpot.index = i;
+        bestSpot.value = nums[i];
       }
     }
-    currentIndex = bestJumpIndex;
+    currentIndex = bestSpot.index;
     numJumps++;
   }
-  console.log(numJumps);
-  return numJumps;
+  return numJumps + 1;
 };
 
-jump([2, 3, 1, 1, 4]);
-jump([1, 1, 1, 1]);
-jump([1, 2, 1, 1, 1]);
-jump([0]);
-
-// Given an array of numbers
-// declare numJumps with an initial value of 1
-// declare currentIndex with an initial value of 0
-// declare bestJumpValue with an initial value of nums[currentIndex]
-// declare bestJumpIndex
-// if currentIndex = nums.length - 1 return numJumps
-// loop through the possible jumps and find the biggest value
-// bestJumpValue gets that value and bestJumpIndex gets that index
-// after the loop currentIndex gets bestJumpIndex
+// Algo
+// Declare a variable numJumps
+// Declare a variable currentIndex with initial value of 0
+// Loop until currentIndex equals nums[n - 1]
+// Available jumpSize gets the value at the current index
+// Iterate from current index to index plus availableJumpSize
+// find the biggest value for index + value
+// move the currentIndex to that index
 // add 1 to numJumps
