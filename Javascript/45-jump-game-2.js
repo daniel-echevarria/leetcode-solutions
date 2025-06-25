@@ -5,14 +5,19 @@ var jump = function (nums) {
   let currentIndex = 0;
   while (currentIndex + nums[currentIndex] < n - 1) {
     const jumpSize = nums[currentIndex];
-    const bestSpot = { index: 0, value: 0 };
-    for (let i = currentIndex + 1; i <= currentIndex + jumpSize; i++) {
-      if (i + nums[i] > bestSpot.value + bestSpot.index) {
-        bestSpot.index = i;
-        bestSpot.value = nums[i];
-      }
-    }
-    currentIndex = bestSpot.index;
+    const possibleJumps = nums.slice(
+      currentIndex + 1,
+      currentIndex + jumpSize + 1
+    );
+    const bestSpot = possibleJumps.reduce(
+      (acc, curr, idx) => {
+        return acc[0] + acc[1] > curr + idx + currentIndex + 1
+          ? acc
+          : [curr, idx + currentIndex + 1];
+      },
+      [possibleJumps[0], currentIndex + 1]
+    );
+    currentIndex = bestSpot[1];
     numJumps++;
   }
   return numJumps + 1;
