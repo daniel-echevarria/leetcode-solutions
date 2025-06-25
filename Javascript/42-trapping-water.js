@@ -2,6 +2,15 @@ var trap = function (height) {
   let left = 0;
   let right = 1;
   let trappedWater = 0;
+  let lastRightWall = 0;
+  for (let i = height.length - 1; i >= 0; i--) {
+    if (height[i] > height[i - 1]) {
+      lastRightWall = i;
+      break;
+    }
+  }
+  if (lastRightWall == 0) return 0;
+  height = height.slice(0, lastRightWall + 1);
   while (right < height.length) {
     if (height[left] <= height[right]) {
       left++;
@@ -26,6 +35,8 @@ var trap = function (height) {
   return trappedWater;
 };
 
+// First 'clean' the array by removing all values on the left and on the right
+// as long as they are smaller than the next
 // Declare a variable left with initial value of 0
 // Declare a variable right with initial value of 1
 // Declare a variable tappedWater with initial value of 0
