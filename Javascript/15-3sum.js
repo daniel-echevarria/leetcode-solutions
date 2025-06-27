@@ -4,20 +4,23 @@ var threeSum = function (numbers) {
   let i = 0;
   let j = 1;
   let k = n - 1;
-  const triplets = new Map();
+  const triplets = [];
   while (i < n) {
     while (j < k) {
       const total = nums[i] + nums[j] + nums[k];
-      const triplet = [nums[i], nums[j], nums[k]];
-      if (total == 0) triplets.set(triplet.sort().toString(), triplet);
+      if (total == 0) triplets.push([nums[i], nums[j], nums[k]]);
       if (total <= 0) {
         const tempo = j;
         while (nums[j] == nums[tempo]) j++;
-      } else k--;
+      } else {
+        const tempo = k;
+        while (nums[k] == nums[tempo]) k--;
+      }
     }
-    i++;
+    const tempo = i;
+    while (nums[i] == nums[tempo]) i++;
     j = i + 1;
     k = n - 1;
   }
-  return [...triplets.values()];
+  return triplets;
 };
