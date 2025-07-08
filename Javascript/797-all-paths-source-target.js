@@ -1,15 +1,15 @@
 var allPathsSourceTarget = function (graph) {
+  const n = graph.length;
   const allPaths = [];
-  let path = [];
-  const DFS = (node) => {
+  const DFS = (node, path = []) => {
     path.push(node);
-    if (graph[node].length < 1) {
+    if (path.includes(n - 1)) {
       allPaths.push(path);
-      path = [];
       return;
     }
+    if (graph[node].length < 1) return;
     for (const link of graph[node]) {
-      DFS(link);
+      DFS(link, [...path]);
     }
   };
   DFS(0);
