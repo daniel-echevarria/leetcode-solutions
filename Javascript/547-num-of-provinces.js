@@ -1,39 +1,21 @@
-var findCircleNum = function (isConnected) {
-  const n = isConnected.length;
-  let numProvinces = 0;
-  const dfs = (i, j) => {
-    if (i < 0 || j < 0 || i > n - 1 || j > n - 1 || isConnected[i][j] == 0)
-      return;
-    isConnected[i][j] = 0;
-    dfs(i + 1, j);
-    dfs(i - 1, j);
-    dfs(i, j + 1);
-    dfs(i, j - 1);
-  };
-  for (let i = 0; i < n; i++) {
-    for (let j = 0; j < n; j++) {
-      if (isConnected[i][j] == 0) continue;
-      numProvinces++;
-      dfs(i, j);
-    }
-  }
-  return numProvinces;
-};
+var findCircleNum = function (isConnected) {};
 
-findCircleNum([
-  [1, 1, 0],
-  [1, 1, 0],
-  [0, 0, 1],
-]);
+// Declare a variable n that gets isConnected length
+// Iterate through isConnected and make a graph of the connected cities as such:
+// if i,j == 1
+// if i == j add j to i or create i:j
+// then check if i exits and add j or create i: j
+// do the same for j, check if j exits, add i if yes or create
+// if i,j == 0 continue
+// this gives is a graph of the adjacency list
 
-// Declare a variable numOfProvinces with initial value of 0
-// Iterate through all the cities in isConnected
-// if the value of the city is 0 continue
-// if the value of the city is 1,
-// add one to numProvinces
-// call dfs on the city
-// the dfs goes as such:
-// if the value is 0 return
-// if the value is 1, it becomes 0
-// if it's out of bounds return
-// call dfs on all the neighbors
+// Declare a visited set
+// Then we iterate from 0 to n - 1
+// if the city  is in the visited set or not in the graph we continue
+// If we find the city in the graph we
+// add 1 to the provinces and launch dfs
+// the dfs goes until all the neighbors are visited
+// it returns if the node is visited
+// otherwise it adds the node anc calls dfs in all the neighbors
+
+// finally return numProvinces
