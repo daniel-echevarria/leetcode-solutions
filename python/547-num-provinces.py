@@ -3,23 +3,22 @@ def createGraph(isConnected):
     connected_cities = {}
     for i in range(n):
         for j in range(n):
-            if isConnected[i][j] == 0:
+            if isConnected[i][j] == 0 or i == j:
                 continue
             if i in connected_cities:
                 connected_cities[i].add(j)
             else:
                 connected_cities[i] = set([j])
-            if j in connected_cities:
-                connected_cities[j].add(i)
-            else:
-                connected_cities[j] = set([i])
     return connected_cities
 
 def dfs(node, graph, visited):
-    if node in visited or node not in graph[node]:
+    if node in visited:
         return
     visited.add(node)
-    for link in graph[node]:
+    linkedCities = graph.get(node)
+    if not linkedCities:
+        return
+    for link in linkedCities:
         dfs(link, graph, visited)
 
 
@@ -34,7 +33,6 @@ class Solution:
                 continue
             provinces_count +=1
             dfs(city, connections, visited)
-        print(provinces_count)
         return(provinces_count)
 
 s = Solution()
