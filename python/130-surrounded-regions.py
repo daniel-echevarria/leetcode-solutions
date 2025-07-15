@@ -5,7 +5,14 @@ class Solution:
         """
         m = len(board)
         n = len(board[0])
-        visited = set()
+        really_visited = set()
+        pairs = []
+
+        def restore():
+            for pair in pairs:
+                i, j = pair
+                board[i][j] = 'O'
+                really_visited.add(f"{i}#{j}")
 
         def isOutOfBounds(i, j):
             if i < 0 or j < 0 or i > m - 1 or j > n - 1:
@@ -13,35 +20,28 @@ class Solution:
             return False
 
         def isRegion(i, j):
-            coordinate_string = f"${i}${j}"
-            if isOutOfBounds(i, j):
+            coordinate_string = f"{i}#{j}"
+            if isOutOfBounds(i, j) or coordinate_string in really_visited:
                 return False
-            if board[i][j] == 'X' or coordinate_string in visited:
+            if board[i][j] == 'X':
                 return True
-            visited.add(coordinate_string)
-            return isRegion(i + 1, j) and isRegion(i - 1, j) and isRegion(i, j + 1) and isRegion(i, j - 1)
-
-        def capture(i, j):
-            if isOutOfBounds(i, j) or board[i][j] == 'X':
-                return
+            pairs.append([i, j])
             board[i][j] = 'X'
-            capture(i + 1, j)
-            capture(i - 1, j)
-            capture(i, j + 1)
-            capture(i, j - 1)
+            return isRegion(i + 1, j) and isRegion(i - 1, j) and isRegion(i, j + 1) and isRegion(i, j - 1)
 
         for i in range(m):
             for j in range(n):
-                if board[i][j] == 'X':
+                pairs = []
+                coordinate_string = f"{i}#{j}"
+                if board[i][j] == 'X' or coordinate_string in really_visited:
                     continue
-                if isRegion(i, j):
-                    capture(i, j)
-                else:
+                if not isRegion(i, j):
+                    restore()
 
-                    visited = set()
+
 
 s = Solution()
-s.solve([["O","O"],["O","O"]])
+s.solve([["X","X","X","X"],["X","O","O","X"],["X","X","O","X"],["X","O","X","X"]])
 
 # Iterate through the matrix
 # if the value is X, continue
