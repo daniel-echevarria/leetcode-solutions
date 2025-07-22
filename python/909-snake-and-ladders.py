@@ -1,15 +1,19 @@
+import numpy
+
+
 class Solution:
     def snakesAndLadders(self, board: list[list[int]]) -> int:
         n = len(board)
+        gameBoard = [list(range(n)) for _ in range(n)]
         square_num = 1
         for row in range(n):
             for col in range(n):
-                board[row][col] = square_num
+                gameBoard[row][col] = square_num
                 square_num += 1
         for row in range(n):
             if row % 2 != 0:
-                board[row].reverse()
-        print(board)
+                gameBoard[row].reverse()
+        print(gameBoard.reverse())
 
 
 s = Solution()
