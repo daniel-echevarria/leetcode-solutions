@@ -2,18 +2,20 @@ from collections import defaultdict
 
 
 def get_max_cities(graph, node, threshold):
-    max_cities = 0
+    visited = set()
+    original = node
 
     def dfs(graph, node, threshold):
-        if threshold <= 0:
+        if threshold < 0 or node in visited:
             return
-        max_cities += 1
+        if not node == original:
+            visited.add(node)
         for neighbor in graph[node]:
             b, w = neighbor
-            dfs(b, threshold - w)
+            dfs(graph, b, threshold - w)
 
     dfs(graph, node, threshold)
-    return max_cities
+    return len(visited)
 
 
 class Solution:
@@ -28,8 +30,13 @@ class Solution:
                 graph[b].append((a, w))
         num_cities_graph = {}
         for i in range(n):
-            num_cities_graph[i] = get_max_cities(graph, i, threshold)
-        print(num_cities_graph)
+            num_cities_graph[i] = get_max_cities(graph, i, distanceThreshold)
+        most_isolated_city = (-1, n)
+        for i in range(n):
+            connections = num_cities_graph[i]
+            if connections <= most_isolated_city[1]:
+                most_isolated_city = (i, connections)
+        return most_isolated_city[0]
 
 
 s = Solution()
