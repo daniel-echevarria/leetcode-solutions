@@ -32,17 +32,19 @@ class Solution:
         for i in range(n):
             num_cities_graph[i] = get_max_cities(graph, i, distanceThreshold)
         most_isolated_city = (-1, n)
+        print(num_cities_graph)
         for i in range(n):
             connections = num_cities_graph[i]
             if connections <= most_isolated_city[1]:
                 most_isolated_city = (i, connections)
+        print(most_isolated_city[0] - 1)
         return most_isolated_city[0]
 
 
 s = Solution()
-n = 4
-edges = [[0, 1, 3], [1, 2, 1], [1, 3, 4], [2, 3, 1]]
-threshold = 4
+n = 6
+edges = [[0, 1, 10], [0, 2, 1], [2, 3, 1], [1, 3, 1], [1, 4, 1], [4, 5, 10]]
+threshold = 20
 s.findTheCity(n, edges, threshold)
 
 
