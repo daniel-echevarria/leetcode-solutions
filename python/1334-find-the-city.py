@@ -3,31 +3,42 @@ from collections import defaultdict
 
 def get_max_cities(graph, node, threshold):
     visited = set()
+    ultimate = set()
     original = node
 
     def dfs(graph, node, threshold):
-        if threshold < 0 or node in visited:
+        if threshold < 0 or node == original:
             return
-        if not node == original:
-            visited.add(node)
+        visited.add(node)
         for neighbor in graph[node]:
+            if neighbor[0] in visited:
+                continue
             b, w = neighbor
             dfs(graph, b, threshold - w)
 
-    dfs(graph, node, threshold)
-    return len(visited)
+    for neighbor in graph[node]:
+        b, w = neighbor
+        dfs(graph, b, threshold - w)
+        ultimate.update(visited)
+        visited = set()
+    return len(ultimate)
+
+
+def generate_graph(edges, distanceThreshold):
+    graph = defaultdict(list)
+    for e in edges:
+        a, b, w = e
+        if w <= distanceThreshold:
+            graph[a].append((b, w))
+            graph[b].append((a, w))
+    return graph
 
 
 class Solution:
     def findTheCity(
         self, n: int, edges: list[list[int]], distanceThreshold: int
     ) -> int:
-        graph = defaultdict(list)
-        for e in edges:
-            a, b, w = e
-            if w <= distanceThreshold:
-                graph[a].append((b, w))
-                graph[b].append((a, w))
+        graph = generate_graph(edges, distanceThreshold)
         num_cities_graph = {}
         for i in range(n):
             num_cities_graph[i] = get_max_cities(graph, i, distanceThreshold)
@@ -37,7 +48,6 @@ class Solution:
             connections = num_cities_graph[i]
             if connections <= most_isolated_city[1]:
                 most_isolated_city = (i, connections)
-        print(most_isolated_city[0] - 1)
         return most_isolated_city[0]
 
 
