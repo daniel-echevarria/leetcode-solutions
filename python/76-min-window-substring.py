@@ -7,12 +7,14 @@ class Solution:
         n = len(t)
         L = 0
         R = n
-        shortest_sub = s
+        shortest_sub = ""
 
         def gen_s_letter_indexes():
             letter_indexes = defaultdict(list)
             for i in range(m):
                 letter = s[i]
+                if letter not in t:
+                    continue
                 letter_indexes[letter].append(i)
             return letter_indexes
 
@@ -34,31 +36,21 @@ class Solution:
         s_letter_indexes = gen_s_letter_indexes()
         t_letter_count = gen_t_letter_count()
 
-        result = isSubstring(0, 10, s_letter_indexes, t_letter_count.items())
-        print(result)
+        while L < (m - n + 1):
+            substring = s[L:R]
+            if isSubstring(L, R, s_letter_indexes, t_letter_count.items()):
+                if not shortest_sub or len(substring) < len(shortest_sub):
+                    shortest_sub = substring
+                L += 1
+            else:
+                if R == m:
+                    break
+                R += 1
+        print(shortest_sub)
+        return shortest_sub
 
 
 sol = Solution()
-s = "ADOBECODEBANC"
-t = "ABC"
+s = "A"
+t = "A"
 sol.minWindow(s, t)
-
-# Algo
-# Declare the variables L, R, shortestSub
-# L gets 0, R gets t length
-# shortestSub gets s
-# Declare a method isSubstring that returns true if all the characters (including duplicates)
-# Are present in the string
-# Launch a loop that runs until L equals s length - n
-# If the window between L and R is a substring
-# compare the size to the shortest string so far
-# If it's smaller, update the the shortestSub
-# L gets +1
-# If it's not a substring
-# if  R equals m - 1 break
-# R gets + 1
-# return shortestSub
-
-# isSubstring:
-# Given a map of all the indexes for each letter
-# Check if there is enough copies of the letters within the given window
