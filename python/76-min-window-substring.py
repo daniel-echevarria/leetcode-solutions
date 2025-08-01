@@ -1,56 +1,34 @@
-from collections import defaultdict
+from collections import Counter
 
 
 class Solution:
     def minWindow(self, s: str, t: str) -> str:
-        m = len(s)
-        n = len(t)
         L = 0
-        R = n
-        shortest_sub = ""
-
-        def gen_s_letter_indexes():
-            letter_indexes = defaultdict(list)
-            for i in range(m):
-                letter = s[i]
-                if letter not in t:
-                    continue
-                letter_indexes[letter].append(i)
-            return letter_indexes
-
-        def gen_t_letter_count():
-            letter_count = defaultdict(int)
-            for i in range(n):
-                letter = t[i]
-                letter_count[letter] += 1
-            return letter_count
-
-        def isSubstring(l, r, sIndexes, tCounts):
-            for pair in tCounts:
-                letter, count = pair
-                available = sum(1 for i in sIndexes[letter] if i >= l and i < r)
-                if available < count:
-                    return False
-            return True
-
-        s_letter_indexes = gen_s_letter_indexes()
-        t_letter_count = gen_t_letter_count()
-
-        while L < (m - n + 1):
-            substring = s[L:R]
-            if isSubstring(L, R, s_letter_indexes, t_letter_count.items()):
-                if not shortest_sub or len(substring) < len(shortest_sub):
-                    shortest_sub = substring
+        shortest_sub = (-1, -1)
+        shortest_len = float("inf")
+        t_counts = Counter(t)
+        window_counts = Counter()
+        have, need = 0, len(t_counts)
+        for R in range(len(s)):
+            r_char = s[R]
+            window_counts[r_char] += 1
+            if r_char in t_counts and t_counts[r_char] == window_counts[r_char]:
+                have += 1
+            while have == need:
+                if R - L + 1 < shortest_len:
+                    shortest_sub = (L, R)
+                    shortest_len = R - L + 1
+                l_char = s[L]
+                window_counts[l_char] -= 1
                 L += 1
-            else:
-                if R == m:
-                    break
-                R += 1
-        print(shortest_sub)
-        return shortest_sub
+                if l_char in t_counts and t_counts[l_char] > window_counts[l_char]:
+                    have -= 1
+        l, r = shortest_sub
+        res = s[l : r + 1]
+        return res
 
 
+s = "ADOBECODEBANC"
+t = "gg"
 sol = Solution()
-s = "A"
-t = "A"
 sol.minWindow(s, t)
