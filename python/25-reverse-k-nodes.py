@@ -5,6 +5,30 @@
 #         self.next = next
 class Solution:
     def reverseKGroup(self, head: Optional[ListNode], k: int) -> Optional[ListNode]:
+        dummy_head = ListNode(0, head)
+        current = head
+        prev = dummy_head
+        post = None
+        while current.next:
+            reversing = []
+            for _ in range(k):
+                if not current:
+                    break
+                reversing.append(current)
+                current = current.next
+            if len(reversing) < k:
+                break
+            post = current.next
+            prev.next = reversing[-1]
+            for _ in range(k):
+                node = reversing.pop()
+                if not reversing:
+                    node.next = post
+                    prev = node
+                else:
+                    node.next = reversing[-1]
+        return dummy_head.next
+
 
 # Algo
 # Keep track of the pre_reversing node and the post_reversing node
@@ -21,4 +45,3 @@ class Solution:
 # prev gets current
 # current next gets post
 # keep going
-
