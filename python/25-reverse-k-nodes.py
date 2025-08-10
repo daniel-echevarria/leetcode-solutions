@@ -9,7 +9,7 @@ class Solution:
         current = head
         prev = dummy_head
         post = None
-        while current.next:
+        while current:
             reversing = []
             for _ in range(k):
                 if not current:
@@ -17,8 +17,9 @@ class Solution:
                 reversing.append(current)
                 current = current.next
             if len(reversing) < k:
+                prev.next = reversing[0]
                 break
-            post = current.next
+            post = current.next if current else None
             prev.next = reversing[-1]
             for _ in range(k):
                 node = reversing.pop()
@@ -28,20 +29,3 @@ class Solution:
                 else:
                     node.next = reversing[-1]
         return dummy_head.next
-
-
-# Algo
-# Keep track of the pre_reversing node and the post_reversing node
-# Make a dummy head to be able to return the modified list in the end
-# Declare a current var with initial value of head
-# prev gets dummy
-# launch a loop until current next is null
-# inside the loop reverse the nodes as such:
-# declare a list of reversing
-# launch a for loop pushing the nodes to reversing and updating current
-# after the loop post gets current next
-# point prev next to the reversing last
-# pop them one by one pointing to reversing last
-# prev gets current
-# current next gets post
-# keep going
