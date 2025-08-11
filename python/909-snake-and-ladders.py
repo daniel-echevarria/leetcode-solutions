@@ -1,6 +1,3 @@
-import numpy
-
-
 class Solution:
     def snakesAndLadders(self, board: list[list[int]]) -> int:
         n = len(board)
