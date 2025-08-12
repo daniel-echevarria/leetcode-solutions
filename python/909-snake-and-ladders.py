@@ -10,7 +10,6 @@ class Solution:
         for row in range(n):
             if row % 2 != 0:
                 gameBoard[row].reverse()
-        print(gameBoard.reverse())
 
 
 s = Solution()
