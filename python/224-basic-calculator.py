@@ -1,19 +1,52 @@
 from collections import deque
 import re
 
-# Input: s = "(1+(4+5+2)-3)+(6+8)"
-# Output: 23
-
 
 class Solution:
     def calculate(self, s: str) -> int:
         clean = list("".join(s.split("+")))
         print(clean)
+        de = deque([])
+        for char in clean:
+            if char == "(" or char == "-":
+                de.append(char)
+            if char.isnumeric():
+                if len(de) == 0 or de[-1] == "(":
+                    de.append(int(char))
+                elif de[-1] == "-":
+                    de.pop()
+                    de.append(int(char) * -1)
+                else:
+                    prev = de.pop()
+                    de.append(int(char) + prev)
+            if char == ")":
+                c = char
+                res = 0
+                while True:
+                    c = de.pop()
+                    if c == "(":
+                        if len(de) == 0 or not de[-1] == "-":
+                            de.append(res)
+                            break
+                        de.pop()
+                        de.append(res * -1)
+                        break
+                    res += int(c)
+        result = sum(de)
+        print(result)
+        return result
 
 
-ex1 = "(1+(4+5+2)-3)+(6+8)"
+ex1 = "(1-(4+5+2)-3)+(6+8)"
+ex2 = "1 + 1"
+ex3 = " 2-1 + 2 "
+ex4 = "2147483647"
+
 s = Solution()
 s.calculate(ex1)
+s.calculate(ex2)
+s.calculate(ex3)
+s.calculate(ex4)
 # algo
 # split the string
 # declare a stack
