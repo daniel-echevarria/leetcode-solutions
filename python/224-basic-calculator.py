@@ -4,22 +4,28 @@ import re
 
 class Solution:
     def calculate(self, s: str) -> int:
-        clean = list("".join(s.split("+")))
+        # clean = list("".join(s.split("+")))
+        # print(clean)
+        clean = list(s)
         print(clean)
         de = deque([])
         for char in clean:
-            if char == "(" or char == "-":
+            if char == "(" or char == "-" or char == "+":
                 de.append(char)
-            if char.isnumeric():
+            elif char.isnumeric():
                 if len(de) == 0 or de[-1] == "(":
                     de.append(int(char))
                 elif de[-1] == "-":
                     de.pop()
                     de.append(int(char) * -1)
-                else:
+                elif de[-1] == "+":
+                    de.pop()
                     prev = de.pop()
                     de.append(int(char) + prev)
-            if char == ")":
+                else:
+                    prev = de.pop()
+                    de.append(f"{prev}{char}")
+            elif char == ")":
                 c = char
                 res = 0
                 while True:
@@ -32,7 +38,10 @@ class Solution:
                         de.append(res * -1)
                         break
                     res += int(c)
-        result = sum(de)
+        print(de)
+        without_plus = filter(lambda x: x != "+", de)
+        final = map(lambda x: int(x), without_plus)
+        result = sum(final)
         print(result)
         return result
 
