@@ -1,37 +1,34 @@
 from collections import defaultdict
 
 
-def createGraph(prerequisites):
-    graph = defaultdict(list)
-    for v in prerequisites:
-        a, b = v
-        graph[a].append(b)
-    return graph
-
-
 class Solution:
 
     def findOrder(self, numCourses: int, prerequisites: list[list[int]]) -> list[int]:
-        explored = defaultdict(str)
+        graph = defaultdict(list)
+        for a, b in prerequisites:
+            graph[a].append(b)
+
+        state = [0] * numCourses  # 0: unvisited, 1: visiting, 2: done
         result = []
-        graph = createGraph(prerequisites)
         has_cycle = False
 
         def dfs(node):
             nonlocal has_cycle
-            explored[node] = "visiting"
+            if has_cycle:
+                return
+            state[node] = 1
             for child in graph[node]:
-                if explored[child] == "visiting":
+                if state[child] == 1:
                     has_cycle = True
                     return
-                if explored[child] == "done":
+                if state[child] == 2:
                     continue
                 dfs(child)
-            explored[node] = "done"
+            state[node] = 2
             result.append(node)
 
         for i in range(numCourses):
-            if explored[i] == "done":
+            if state[i] == 2:
                 continue
             dfs(i)
 
@@ -46,4 +43,5 @@ class Solution:
 
 
 # s = Solution()
+# s.findOrder(4, ex1)
 # s.findOrder(2, ex2)
