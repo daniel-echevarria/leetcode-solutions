@@ -10,15 +10,15 @@ class Solution:
             "8": ["t", "u", "v"],
             "9": ["w", "x", "y", "z"],
         }
-        self.results = set()
+        self.results = []
 
     def helper(self, digits, path="", index=0):
         if len(path) == len(digits):
-            path and self.results.add(path)
+            path and self.results.append(path)
             return
         for letter in self.digits_to_letters[digits[index]]:
             self.helper(digits, path + letter, index + 1)
 
     def letterCombinations(self, digits: str) -> list[str]:
         self.helper(digits)
-        return list(self.results)
+        return self.results
