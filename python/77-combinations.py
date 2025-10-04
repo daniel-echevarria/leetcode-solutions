@@ -3,17 +3,19 @@ class Solution:
         self.results = []
         self.visited = set()
 
-    def helper(self, n, k, path=""):
+    def helper(self, n, k, current, path=""):
         if len(path) == k:
             standardized = sorted(list(path))
             self.results.append(standardized)
             return
         for i in range(n):
+            if i == current:
+                return
             self.helper(n, k, path + str(i + 1))
 
     def combine(self, n: int, k: int) -> list[list[int]]:
         for i in range(n):
-            self.helper(n, k, path=str(i + 1))
+            self.helper(n, k, i, path=str(i + 1))
         return self.results
 
 
