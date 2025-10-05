@@ -3,20 +3,21 @@ class Solution:
         self.results = []
         self.visited = set()
 
-    def helper(self, n, k, current, path=""):
+    def helper(self, n, k, path=""):
         if len(path) == k:
             standardized = sorted(list(path))
+            standardized[:] = map(lambda x: int(x), standardized)
             self.results.append(standardized)
             return
-        for i in range(n):
-            if i == current:
+        for i in range(n + 1):
+            if str(i + 1) in path:
                 return
             self.helper(n, k, path + str(i + 1))
 
     def combine(self, n: int, k: int) -> list[list[int]]:
         for i in range(n):
-            self.helper(n, k, i, path=str(i + 1))
-        return self.results
+            self.helper(n, k, path=str(i + 1))
+        return sorted(self.results)
 
 
 s = Solution()
