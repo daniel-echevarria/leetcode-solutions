@@ -1,25 +1,20 @@
 class Solution:
     def permute(self, nums: list[int]) -> list[list[int]]:
-        n = len(nums)
-        results = []
-        stored = set()
+        result = []
 
-        def helper(i):
-            option = nums[:]
-            for j in range(n):
-                option[j] = nums[i]
-                option[i] = nums[j]
-                string_version = "".join(list(map(str, option)))
-                if string_version not in stored:
-                    results.append(option)
-                stored.add(string_version)
-                option = nums[:]
+        def backtrack(path=[], moves=nums):
+            if len(path) == len(nums):
+                result.append(path)
+                return
+            for i in range(len(moves)):
+                backtrack(
+                    [*path, moves[i]],
+                    [*moves[:i], *moves[i + 1 :]],
+                )
 
-        for i in range(n):
-            helper(i)
-        print(results)
-        return results
+        backtrack()
+        return result
 
 
 s = Solution()
-s.permute([1, 2, 3])
+s.permute([4, 7, 9])
