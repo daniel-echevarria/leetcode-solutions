@@ -1,3 +1,6 @@
+from collections import deque
+
+
 class Node:
     def __init__(self):
         self.is_end = False
@@ -11,7 +14,7 @@ class WordDictionary:
 
     def addWord(self, word: str) -> None:
         node = self.root
-        for char in enumerate(word):
+        for char in word:
             if char in node.children:
                 node = node.children[char]
                 continue
@@ -20,19 +23,23 @@ class WordDictionary:
         node.is_end = True
 
     def search(self, word: str) -> bool:
-        node = self.root
-        jumped = []
-        for char in word:
-            if char == "." and not jumped:
-                for values in node.children.values():
-                    jumped.append(values.children)
 
-            else:
-                if char not in node.children:
-                    return False
-                node = node.children[char]
-            jumped = False
-        return node.is_end
+        def dfs(node, i):
+            if i == len(word):
+                return node.is_end
+
+            char = word[i]
+
+            if char == ".":
+                for ch in node.children.values():
+                    if dfs(ch, i + 1):
+                        return True
+                return False
+            if char in node.children:
+                return dfs(node.children[char], i + 1)
+            return False
+
+        return dfs(self.root, 0)
 
 
 wordDictionary = WordDictionary()
@@ -42,6 +49,7 @@ print(
     wordDictionary.addWord("mad"),
     wordDictionary.search("pad"),
     wordDictionary.search("bad"),
-    wordDictionary.search(".ad"),
+    wordDictionary.addWord("mado"),
+    wordDictionary.search(".ado"),
     wordDictionary.search("b.."),
 )
