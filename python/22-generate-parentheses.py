@@ -1,2 +1,4 @@
 class Solution:
-    def generateParenthesis(self, n: int) -> List[str]:
+    def generateParenthesis(self, n: int) -> list[str]:
+        results = []
+        def backtrack(path, moves):
