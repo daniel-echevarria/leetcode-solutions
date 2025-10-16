@@ -1,21 +1,18 @@
 class Solution:
     def generateParenthesis(self, n: int) -> list[str]:
         results = []
-        count = {"(": 0, ")": 0}
 
-        def backtrack(path, current):
-            count[current] += 1
+        def backtrack(path, a, b):
             if len(path) == n * 2:
                 results.append(path)
                 return
-            if count[")"] < count["("]:
-                backtrack(path + ")", current=")")
-            if path.count("(") < n:
-                print(path)
-                backtrack(path + "(", current="(")
+            if a < n:
+                backtrack(path + "(", a + 1, b)
+            if b < a:
+                backtrack(path + ")", a, b + 1)
 
-        backtrack("(", "(")
-        print(results)
+        backtrack("(", 1, 0)
+        return results
 
 
 s = Solution()
