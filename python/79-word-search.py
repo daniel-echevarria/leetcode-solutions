@@ -2,37 +2,29 @@ class Solution:
     def exist(self, board: list[list[str]], word: str) -> bool:
         m = len(board)
         n = len(board[0])
-        res = False
 
-        def backtrack(y, x, path, board):
-            nonlocal res
-            if res:
+        def backtrack(y, x, k):
+            if not (0 <= x < n and 0 <= y < m):
                 return
-            if x < 0 or x > n - 1 or y < 0 or y > m - 1:
+            if board[y][x] != word[k]:
                 return
-            path += board[y][x]
-            board[y][x] = "Done"
-            if not word.startswith(path):
-                return
-            if path == word:
-                res = True
-                return
-            backtrack(y, x - 1, path, board[:])
-            backtrack(y, x + 1, path, board[:])
-            backtrack(y + 1, x, path, board[:])
-            backtrack(y - 1, x, path, board[:])
+            if k == len(word) - 1:
+                return True
+
+            tmp = board[y][x]
+            board[y][x] = "#"
+
+            found = (
+                backtrack(y, x - 1, k + 1)
+                or backtrack(y, x + 1, k + 1)
+                or backtrack(y + 1, x, k + 1)
+                or backtrack(y - 1, x, k + 1)
+            )
+            board[y][x] = tmp
+            return found
 
         for i in range(m):
             for j in range(n):
-                backtrack(i, j, "", board[:])
-
-        return res
-
-
-s = Solution()
-# board = [["A", "B", "C", "E"], ["S", "F", "C", "S"], ["A", "D", "E", "E"]]
-# word = "ABCCED"
-board = [["A", "B", "C", "E"], ["S", "F", "C", "S"], ["A", "D", "E", "E"]]
-word = "SEE"
-
-print(s.exist(board, word))
+                if backtrack(i, j, 0):
+                    return True
+        return False
