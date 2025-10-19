@@ -26,21 +26,48 @@ class Trie:
         return node.is_end
 
 
-t = Trie()
-t.add("peak")
-t.add("hey")
-t.add("cool")
-print(t.search("hey"))
-print(t.search("coo"))
-print(t.search("cool"))
-# class Solution:
-#     def findWords(self, board: list[list[str]], words: list[str]) -> list[str]:
+class Solution:
+    def findWords(self, board: list[list[str]], words: list[str]) -> list[str]:
+        m = len(board)
+        n = len(board[0])
+        my_trie = Trie()
+        for word in words:
+            my_trie.add(word)
+        found = set()
 
-# # Algo
-# # Build a Trie for each word in words
+        def backtrack(y, x, node, path):
+            if not (0 <= y < m and 0 <= x < n):
+                return
+
+            tmp = board[y][x]
+            char = board[y][x]
+            board[y][x] = "#"
+            if char not in node.children:
+                board[y][x] = tmp
+                return
+            if char in node.children and node.children[char].is_end:
+                word = path + char
+                found.add(word)
+
+            backtrack(y + 1, x, node.children[char], path + char)
+            backtrack(y - 1, x, node.children[char], path + char)
+            backtrack(y, x + 1, node.children[char], path + char)
+            backtrack(y, x - 1, node.children[char], path + char)
+            board[y][x] = tmp
+
+        for y in range(m):
+            for x in range(n):
+                backtrack(y, x, my_trie.root, "")
+        res = list(found)
+        return res
 
 
-# board = [["o","a","a","n"],["e","t","a","e"],["i","h","k","r"],["i","f","l","v"]]
-# words = ["oath","pea","eat","rain"]
-# s = Solution()
-# s.findWords()
+board = [
+    ["o", "a", "a", "n"],
+    ["e", "t", "a", "e"],
+    ["i", "h", "k", "r"],
+    ["i", "f", "l", "v"],
+]
+words = ["oath", "pea", "eat", "rain"]
+s = Solution()
+s.findWords(board, words)
