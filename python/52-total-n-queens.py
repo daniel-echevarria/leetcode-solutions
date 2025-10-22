@@ -1,25 +1,27 @@
 class Solution:
     def totalNQueens(self, n: int) -> int:
-        board = [[0] * n for _ in range(n)]
+        self.count = 0
+        cols = set()
+        pos_diago = set()
+        neg_diago = set()
 
-        solutions = set()
-
-        def backtrack(y, x, path="", i=[], j=[]):
-            if len(path) == n * 3:
-                solutions.add(path)
+        def backtrack(r):
+            if r == n:
+                self.count += 1
                 return
-            board[y][x] = "#"
-            i.append(y)
-            j.append(x)
-            for k in range(n):
-                for l in range(n):
-                    if k in i or l in j:
-                        continue
-                    backtrack(k, l, path + f"{y},{x}", i, j)
+            for c in range(n):
+                if c in cols or (r + c) in pos_diago or (r - c) in neg_diago:
+                    continue
+                cols.add(c)
+                pos_diago.add(r + c)
+                neg_diago.add(r - c)
+                backtrack(r + 1)
+                cols.remove(c)
+                pos_diago.remove(r + c)
+                neg_diago.remove(r - c)
 
-        for y in range(n):
-            for x in range(n):
-                backtrack(y, x)
+        backtrack(0)
+        return self.count
 
 
 s = Solution()
