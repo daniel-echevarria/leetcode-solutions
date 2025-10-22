@@ -8,36 +8,41 @@ from collections import deque
 #         self.next = next
 
 
-class LinkedList:
-    def __init__(self):
-        self.root = ListNode(float("-inf"))
-
-    def add(self, val, current, previous=None):
-        if not current or val < current.val:
-            node = ListNode(val, current)
-            if previous:
-                previous.next = node
-            return
-        self.add(val, current.next, current)
-
-
 class Solution:
     def mergeKLists(self, lists):
-        mother_list = LinkedList()
+        dummy = ListNode(float("-inf"))
         if not lists:
             return
-        while lists:
-            for i, list in enumerate(lists):
-                if not list:
-                    del lists[i]
-                    continue
-                mother_list.add(list.val, mother_list.root)
-                lists[i] = list.next
-        return mother_list.root.next
+
+        def merge(l1, l2, current):
+            if not l1:
+                current.next = l2
+                return dummy
+            if not l2:
+                current.next = l1
+                return dummy
+            if l1.val <= l2.val:
+                current.next = ListNode(l1.val)
+                current = current.next
+                l1 = l1.next
+            else:
+                current.next = ListNode(l2.val)
+                current = current.next
+                l2 = l2.next
+            return merge(l1, l2, current)
+
+        while len(lists) > 1:
+            l1 = lists.pop()
+            l2 = lists.pop()
+            res = merge(l1, l2, dummy)
+            lists.append(res.next)
+
+        return lists[0]
 
 
-# s = Solution()
-# s.mergeKLists()
+lists = [ListNode(2), ListNode(), ListNode(-1)]
+s = Solution()
+s.mergeKLists(lists)
 
 
 # Brute force
