@@ -1,22 +1,24 @@
 class Solution:
     def maxSubarraySumCircular(self, nums: list[int]) -> int:
-        current_sum_left = current_sum_right = max_sum = float("-inf")
-        mid = len(nums) // 2
+        min_sum = current_min = float("inf")
+        max_sum = current_max = float("-inf")
+        total_sum = 0
 
-        for i in range(0, len(nums)):
-            current_sum_left = max(nums[i], current_sum_left + nums[i])
-            max_sum = max(max_sum, current_sum_left)
-
-        for j in range(mid - 1, -len(nums) + 1, -1):
-            current_sum_right = max(nums[j], current_sum_right + nums[j])
-            max_sum = max(max_sum, current_sum_right)
-
-        return max_sum
+        for num in nums:
+            current_min = min(current_min + num, num)
+            min_sum = min(min_sum, current_min)
+            current_max = max(current_max + num, num)
+            max_sum = max(max_sum, current_max)
+            total_sum += num
+        if max_sum < 0:
+            return max_sum
+        return max(max_sum, (total_sum - min_sum))
 
 
 s = Solution()
 # nums = [-2, 4, -5, 4, -5, 9, 4]
 # nums = [3, -1, 2, -1]
 # nums = [9, 8, 4, -7]
-nums = [5, 6, 1, 4, 8, -8, 7, -5, 3]
+# nums = [5, 6, 1, 4, 8, -8, 7, -5, 3]
+nums = [1, -2, 3, -2]
 print(s.maxSubarraySumCircular(nums))
