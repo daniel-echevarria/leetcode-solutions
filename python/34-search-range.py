@@ -2,48 +2,45 @@ class Solution:
     def searchRange(self, nums: list[int], target: int) -> list[int]:
         n = len(nums)
 
-        def helper(l, r):
+        def search_left():
+            l, r = 0, n - 1
+
             while l <= r:
                 mid = (l + r) // 2
-                if l == r:
-                    if nums[l] == target:
-                        return l
-                    return -1
-                if nums[mid] == target:
+                if nums[mid] == target and (mid == 0 or nums[mid] > nums[mid - 1]):
                     return mid
-                elif target < nums[mid]:
-                    return helper(l, mid)
+                elif nums[mid] >= target:
+                    r = mid - 1
                 else:
-                    return helper(mid + 1, r)
-            return -1
+                    l = mid + 1
 
-        index = helper(0, n - 1)
-        if index == -1:
+        def search_right():
+            l, r = 0, n - 1
+
+            while l <= r:
+                mid = (l + r) // 2
+                if nums[mid] == target and (mid == n - 1 or nums[mid] < nums[mid + 1]):
+                    return mid
+                elif nums[mid] <= target:
+                    l = mid + 1
+                else:
+                    r = mid - 1
+
+        left = search_left()
+        right = search_right()
+        if left == None or right == None:
             return [-1, -1]
-        l = r = index
-        while True:
-            if l == 0:
-                break
-            if nums[l - 1] == target:
-                l -= 1
-                continue
-            break
-        while True:
-            if r == n - 1:
-                break
-            if nums[r + 1] == target:
-                r += 1
-                continue
-            break
-
-        return [l, r]
+        return [left, right]
 
 
 s = Solution()
 # nums = [5, 7, 7, 8, 8, 10]
 # target = 8
-nums = [1]
+# nums = [1]
+# target = 1
+nums = [1, 2, 3]
 target = 1
+
 print(s.searchRange(nums, target))
 
 # Do a normal binary search then look for the extremities:
