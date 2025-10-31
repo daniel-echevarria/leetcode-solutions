@@ -18,7 +18,7 @@ class Solution:
         if not median1:
             return median2
         elif not median2:
-            return median2
+            return median1
         return (median1 + median2) / 2
 
 
