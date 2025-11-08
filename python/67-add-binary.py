@@ -1,6 +1,9 @@
 class Solution:
     def addBinary(self, a: str, b: str) -> str:
-        "hello"
+        return format(int(a, 2) + int(b, 2), "b")
 
 
-print(bin(3))
+s = Solution()
+a = "1010"
+b = "1110"
+print(s.addBinary(a, b))
