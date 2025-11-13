@@ -1,15 +1,9 @@
 class Solution:
     def trailingZeroes(self, n: int) -> int:
-        if n == 1:
-            return 1
-        return n * self.trailingZeroes(n - 1)
+        if n == 0:
+            return 0
+        return n // 5 + self.trailingZeroes(n // 5)
 
 
 s = Solution()
-print(s.trailingZeroes(100))
-
-# Brute force algo
-# Get the value of the factorial, count the 0 in the result string
-# STACK OVERLOAD
-
-# Pattern algo
+print(s.trailingZeroes(25))
