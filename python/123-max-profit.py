@@ -1,26 +1,23 @@
-from operator import itemgetter
-
-
 class Solution:
     def maxProfit(self, prices: list[int]) -> int:
-        # tuple model is sum, holding, transactions_count, profit
-        memo = [[] for _ in range(len(prices) + 1)]
-        memo[0].append((0, False, 0, 0))
+        # dp states:
+        # buy1  = max profit after first buy
+        # sell1 = max profit after first sell
+        # buy2  = max profit after second buy
+        # sell2 = max profit after second sell
 
-        for i, p in enumerate(prices):
-            for state in memo[i]:
-                c, h, t_count, profit = state
+        buy1 = float("-inf")
+        sell1 = 0
+        buy2 = float("-inf")
+        sell2 = 0
 
-                if t_count == 2:
-                    memo[i + 1].append((c, h, t_count, profit))
-                elif h:
-                    new_profit = profit + p - c
-                    memo[i + 1].append((0, False, t_count + 1, new_profit))
-                    memo[i + 1].append((c, h, t_count, profit))
-                else:
-                    memo[i + 1].append((p, True, t_count, profit))
-                    memo[i + 1].append((c, h, t_count, profit))
-        return max(memo[-1], key=itemgetter(3))[3]
+        for price in prices:
+            buy1 = max(buy1, -price)  # buy first stock
+            sell1 = max(sell1, buy1 + price)  # sell first stock
+            buy2 = max(buy2, sell1 - price)  # buy second stock
+            sell2 = max(sell2, buy2 + price)  # sell second stock
+
+        return sell2
 
 
 s = Solution()
