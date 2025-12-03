@@ -1,22 +1,22 @@
-from collections import defaultdict
-
-
 class Solution:
     def findErrorNums(self, nums: list[int]) -> list[int]:
-        count = defaultdict(int)
+        duplicate = missing = None
+
         for n in nums:
-            count[n] += 1
+            idx = abs(n) - 1
+            if nums[idx] < 0:
+                duplicate = abs(n)
+            else:
+                nums[idx] *= -1
 
-        miss_dup = [None] * 2
+        for i, n in enumerate(nums):
+            if n > 0:
+                missing = i + 1
+                break
 
-        for i in range(1, len(nums) + 1):
-            if i not in count:
-                miss_dup[1] = i
-            elif count[i] == 2:
-                miss_dup[0] = i
-        return miss_dup
+        return [duplicate, missing]
 
 
 s = Solution()
-nums = [1, 3, 3, 4]
+nums = [1, 1, 5, 3, 2, 7, 6, 4, 8, 9]
 print(s.findErrorNums(nums))
