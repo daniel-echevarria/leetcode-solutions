@@ -1,5 +1,17 @@
 class Solution:
     def finalPrices(self, prices: list[int]) -> list[int]:
+        stack = []
+        res = prices[:]
+        for i in range(len(prices) - 1, -1, -1):
+            current_price = prices[i]
+
+            while stack and stack[-1] > current_price:
+                stack.pop()
+            if stack:
+                res[i] = current_price - stack[-1]
+            stack.append(current_price)
+        return res
+
 
 s = Solution()
 # prices = [8, 4, 6, 2, 3]
