@@ -1,8 +1,6 @@
 class Solution:
     def timeRequiredToBuy(self, tickets: list[int], k: int) -> int:
         tickets_to_buy = tickets[k]
-        if tickets_to_buy == 1:
-            return k + 1
         time = 0
         for i in range(k + 1):
             time += min(tickets[i], tickets_to_buy)
