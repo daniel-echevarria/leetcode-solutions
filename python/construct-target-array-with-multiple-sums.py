@@ -3,29 +3,34 @@ import heapq
 
 class Solution:
     def isPossible(self, target: list[int]) -> bool:
-        heap = [-m for m in target]
+        heap = [-n for n in target]
         heapq.heapify(heap)
-        while True:
-            biggest = heapq.heappop(heap)
-            rest = sum(heap)
 
-            if -biggest == 1:
+        total = sum(target)
+
+        while True:
+            biggest = -heapq.heappop(heap)
+            rest = total - biggest
+
+            if biggest == 1 or rest == 1:
                 return True
 
-            if rest == 0 or biggest > rest:
+            if biggest <= rest or rest == 0:
                 return False
 
-            replaced = biggest % rest
-            heapq.heappush(heap, replaced)
-
-            if replaced > -1:
+            prev = biggest % rest
+            if prev == 0:
                 return False
+            heapq.heappush(heap, -prev)
+            total = rest + prev
 
 
 s = Solution()
-target = [9, 3, 5]
-# target = [1, 1000000000]
+# target = [9, 3, 5]
+target = [1, 1000000000]
 # target = [1, 1, 1, 2]
+# target = [8, 5]
+# target = [1, 1, 2]
 
 print(s.isPossible(target))
 # Algo
