@@ -1,20 +1,24 @@
 class Solution:
     def minDeletionSize(self, strs: list[str]) -> int:
-        grid = [""] * len(strs[0])
-        for s in strs:
-            for i in range(len(s)):
-                grid[i] += s[i]
+        removed = 0
+        for col in range(len(strs[0])):
+            for row in range(1, len(strs)):
+                if strs[row - 1][col] > strs[row][col]:
+                    if col > 0:
+                        if (
+                            strs[row - 1][col - (1 + removed)]
+                            == strs[row][col - (1 + removed)]
+                        ):
+                            removed += 1
+                            break
+        return removed
 
-        count = 0
-        for s in grid:
-            if s != "".join(sorted(s)):
-                count += 1
-        return count
 
-
-strs = ["cba", "daf", "ghi"]
+# st = ["cba", "daf", "ghi"]
+st = ["zyx", "wvu", "tsr"]
+# st = ["xga", "xfb", "yfa"]
 s = Solution()
-print(s.minDeletionSize(strs))
+print(s.minDeletionSize(st))
 
 
 # Algo
