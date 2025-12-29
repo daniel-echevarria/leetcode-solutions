@@ -20,6 +20,16 @@ class Solution:
                 r -= 1
 
 
+class Solution:
+    def twoSum(self, nums: list[int], target: int) -> list[int]:
+        possible_pairs = {}
+
+        for i, n in enumerate(nums):
+            if n in possible_pairs:
+                return [possible_pairs[n], i]
+            possible_pairs[target - n] = i
+
+
 s = Solution()
 nums = [2, 7, 11, 15]
 target = 9
