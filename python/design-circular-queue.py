@@ -29,6 +29,7 @@ class MyCircularQueue:
                 while current.prev:
                     current.pos -= 1
                     current = current.prev
+            print(front.pos)
         newBack = QueueNode(value, back.pos + 1, back, None)
         back.prev = newBack
         self.back = newBack
