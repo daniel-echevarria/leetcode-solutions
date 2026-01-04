@@ -12,6 +12,18 @@ class Solution:
         return -1
 
 
+class Solution:
+    def pivotIndex(self, nums: list[int]) -> int:
+        total = sum(nums)
+        left_sum = 0
+
+        for i, n in enumerate(nums):
+            if total - left_sum - n == left_sum:
+                return i
+            left_sum += n
+        return -1
+
+
 s = Solution()
 # nums = [1, 7, 3, 6, 5, 6]
 # nums = [2, 1, -1]
