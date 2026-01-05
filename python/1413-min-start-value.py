@@ -1,14 +1,14 @@
 class Solution:
     def minStartValue(self, nums: list[int]) -> int:
-        deepest = float("inf")
+
+        deepest = 0
         current = 0
+
         for n in nums:
             current += n
             deepest = min(deepest, current)
 
-        if deepest < 1:
-            return abs(deepest) + 1
-        return 1
+        return 1 - deepest
 
 
 s = Solution()
