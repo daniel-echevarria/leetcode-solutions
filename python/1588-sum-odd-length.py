@@ -16,6 +16,25 @@ class Solution:
         return total
 
 
+class Solution:
+    def sumOddLengthSubarrays(self, arr: list[int]) -> int:
+        l = len(arr)
+        total = 0
+
+        for i, n in enumerate(arr):
+            left = i + 1
+            right = l - i
+
+            odd_left = (left + 1) // 2
+            even_left = (left) // 2
+            odd_right = (right + 1) // 2
+            even_right = (right) // 2
+
+            count = (odd_left * odd_right) + (even_left * even_right)
+            total += n * count
+        return total
+
+
 s = Solution()
 arr = [1, 4, 2, 5, 3]
 print(s.sumOddLengthSubarrays(arr))
