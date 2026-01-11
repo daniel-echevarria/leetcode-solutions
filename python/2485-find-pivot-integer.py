@@ -1,20 +1,25 @@
 class Solution:
     def pivotInteger(self, n: int) -> int:
         arr = []
+        prefix = []
+        curr = 0
         for i in range(1, n + 1):
             arr.append(i)
-
-        total = sum(arr)
-        curr = 0
-        for i in range(n + 1):
+            prefix.append(curr + i)
             curr += i
-            if curr == total - curr + i:
-                return i
-        return -1
+
+        l, r = 0, n - 1
+
+
+class Solution:
+    def pivotInteger(self, n: int) -> int:
+        total = n * (n + 1) // 2
+        x = int(total**0.5)
+        return x if x * x == total else -1
 
 
 s = Solution()
-print(s.pivotInteger(1))
+print(s.pivotInteger(8))
 
 # Create the array
 # get the total sum
