@@ -1,14 +1,11 @@
 class Solution:
     def reductionOperations(self, nums: list[int]) -> int:
-        operations = 0
-        ordered_nums = sorted(nums, reverse=True)
-        unique_sorted = sorted(list(set(nums)))
-        for i, n in enumerate(unique_sorted):
-            count = 0
-            while ordered_nums and ordered_nums[-1] == n:
-                ordered_nums.pop()
-                count += 1
-            operations += count * i
+        nums.sort()
+        operations = distance = 0
+        for i in range(1, len(nums)):
+            if nums[i] != nums[i - 1]:
+                distance += 1
+            operations += distance
         return operations
 
 
