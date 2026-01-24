@@ -1,15 +1,10 @@
 class Solution:
     def judgeSquareSum(self, c: int) -> bool:
-        squares = set()
-        for i in range(c + 1):
-            if i * i == c:
+        l, r = 0, c / 2
+        while l < r:
+            curr = l * l + r * r
+            if curr == c:
                 return True
-            if c - i * i in squares:
-                return True
-            if i * i * 2 == c:
-                return True
-            squares.add(i * i)
-        return False
 
 
 s = Solution()
