@@ -1,20 +1,11 @@
 class Solution:
     def beautifulArray(self, n: int) -> list[int]:
-        if n == 1:
-            return [1]
-
-        odds = self.beautifulArray((n + 1) // 2)
-        evens = self.beautifulArray(n // 2)
-
-        result = []
-
-        for x in odds:
-            result.append(x * 2 - 1)
-
-        for x in evens:
-            result.append(x * 2)
-
-        return result
+        res = [1]
+        while len(res) < n:
+            res = [2 * x - 1 for x in res if 2 * x - 1 <= n] + [
+                2 * x for x in res if 2 * x <= n
+            ]
+        return res
 
 
 s = Solution()
