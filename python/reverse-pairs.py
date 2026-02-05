@@ -14,29 +14,30 @@ class Solution:
         total = 0
 
         def merge(arr1, arr2):
-            nonlocal total
             res = []
             l = r = 0
             while l < len(arr1) and r < len(arr2):
-                if arr1[l] >= arr2[r]:
-                    local_l = l
-                    while local_l < len(arr1) and arr1[local_l] <= arr2[r] * 2:
-                        local_l += 1
-                    if local_l < len(arr1) and arr1[local_l] > arr2[r] * 2:
-                        total += len(arr1) - local_l
-                    res.append(arr2[r])
-                    r += 1
-                else:
+                if arr1[l] < arr2[r]:
                     res.append(arr1[l])
                     l += 1
+                else:
+                    res.append(arr2[r])
+                    r += 1
             return res + arr1[l:] + arr2[r:]
 
         def merge_sort(arr):
+            nonlocal total
             if len(arr) < 2:
                 return arr
             mid = len(arr) // 2
             left = merge_sort(arr[:mid])
             right = merge_sort(arr[mid:])
+            j = 0
+            for i in range(len(left)):
+                while j < len(right) and left[i] > 2 * right[j]:
+                    j += 1
+                total += j
+
             return merge(left, right)
 
         merge_sort(nums)
