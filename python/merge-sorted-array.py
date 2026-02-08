@@ -72,6 +72,7 @@ class Solution:
         while j >= 0:
             nums1[k] = nums2[j]
             k -= 1
+            j -= 1
         return nums1
 
 
