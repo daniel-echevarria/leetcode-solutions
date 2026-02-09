@@ -1,67 +1,46 @@
-class QueueNode:
-    def __init__(self, val, pos, nxt, prev):
-        self.val = val
-        self.pos = pos
-        self.nxt = nxt
-        self.prev = prev
-
-
 class MyCircularQueue:
 
     def __init__(self, k: int):
         self.size = k
-        self.front = QueueNode("root", -1, None, None)
-        self.back = self.front
+        self.front_idx = 0
+        self.rear_idx = 0
+        self.queue = [-1] * k
 
     def enQueue(self, value: int) -> bool:
-        if self.front.val == "root" and self.back.val == "root":
-            newRoot = QueueNode(value, 0, None, None)
-            self.front = newRoot
-            self.back = newRoot
-            return True
-        back = self.back
-        front = self.front
-        if back.pos == self.size - 1:
-            if front.pos == 0:
-                return False
-            else:
-                current = front
-                while current.prev:
-                    current.pos -= 1
-                    current = current.prev
-            print(front.pos)
-        newBack = QueueNode(value, back.pos + 1, back, None)
-        back.prev = newBack
-        self.back = newBack
+        if self.isFull():
+            return False
+        if self.rear_idx < self.size:
+            self.queue[self.rear_idx] = value
+            self.rear_idx += 1
+        else:
+            self.front_idx -= 1
+            self.queue[self.front_idx] = value
         return True
 
     def deQueue(self) -> bool:
-        front = self.front
-        if front.val == "root" and self.back.val == "root":
+        if self.isEmpty():
             return False
-        if front.prev:
-            front.prev.nxt == None
-            self.front = front.prev
-            return True
-        self.front = QueueNode("root", -1, None, None)
-        self.back = self.front
+        self.queue[self.front_idx] = -1
+        self.front_idx += 1
         return True
 
     def Front(self) -> int:
-        if self.front.val == "root":
+        if self.isEmpty():
             return -1
-        return self.front.val
+        return self.queue[self.front_idx]
 
     def Rear(self) -> int:
-        if self.back.val == "root":
+        if self.isEmpty():
             return -1
-        return self.back.val
+        print(self.rear_idx)
+        print(self.queue[self.rear_idx - 1])
+        return self.queue[self.rear_idx - 1]
 
     def isEmpty(self) -> bool:
-        return self.front.val == "root" and self.back.val == "root"
+        return self.front_idx == self.rear_idx
 
     def isFull(self) -> bool:
-        return self.back.pos == self.size - 1 and self.front.pos == 0
+        return self.rear_idx - self.front_idx == self.size
 
 
 # Your MyCircularQueue object will be instantiated and called as such:
