@@ -49,12 +49,40 @@ class Solution:
         )
 
 
-bloomDay = [1, 10, 3, 10, 2]
-m = 3
-k = 1
-# bloomDay = [7, 7, 7, 7, 12, 7, 7]
-# m = 2
-# k = 3
+class Solution:
+    def minDays(self, bloomDay: list[int], m: int, k: int) -> int:
+        sorted_days = sorted(list(set(bloomDay)))
+        l, r = 0, len(sorted_days) - 1
+
+        def can_make_bouquets(num_days):
+            flowers = 0
+            bouquets = 0
+            for d in bloomDay:
+                if d <= num_days:
+                    flowers += 1
+                    if flowers == k:
+                        bouquets += 1
+                        flowers = 0
+                else:
+                    flowers = 0
+            return bouquets >= m
+
+        while l < r:
+            mid = (l + r) // 2
+            if can_make_bouquets(sorted_days[mid]):
+                r = mid
+            else:
+                l = mid + 1
+
+        return sorted_days[l] if can_make_bouquets(sorted_days[l]) else -1
+
+
+# bloomDay = [1, 10, 3, 10, 2]
+# m = 3
+# k = 1
+bloomDay = [7, 7, 7, 7, 12, 7, 7]
+m = 2
+k = 3
 
 s = Solution()
 print(s.minDays(bloomDay, m, k))
