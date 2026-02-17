@@ -35,6 +35,30 @@ class Solution:
         return closest
 
 
+class Solution:
+    def threeSumClosest(self, nums: list[int], target: int) -> int:
+        nums.sort()
+        curr_sum = nums[0] + nums[1] + nums[2]
+        closest = curr_sum
+
+        for i in range(len(nums)):
+            j, k = i + 1, len(nums) - 1
+
+            while j < k:
+                curr_sum = nums[i] + nums[j] + nums[k]
+
+                if abs(target - curr_sum) < abs(target - closest):
+                    closest = curr_sum
+
+                if curr_sum < target:
+                    j += 1
+                elif curr_sum > target:
+                    k -= 1
+                else:
+                    return target
+        return closest
+
+
 # Algo
 # sort the array
 # for each value at index i
@@ -45,7 +69,9 @@ class Solution:
 
 # nums = [-1, 2, 1, -4]
 # target = 1
-nums = [0, 1, 2]
-target = 0
+# nums = [0, 1, 2]
+# target = 0
+nums = [0, 0, 0]
+target = 1
 s = Solution()
 print(s.threeSumClosest(nums, target))
