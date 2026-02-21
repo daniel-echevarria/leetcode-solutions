@@ -29,11 +29,35 @@ class Solution:
         return max_string
 
 
+class Solution:
+    def characterReplacement(self, s: str, k: int) -> int:
+        l = 0
+        most_present_char = s[0]
+        most_present_count = 1
+        counts = {most_present_char: most_present_count}
+        max_length = 1
+        for r in range(1, len(s)):
+            char = s[r]
+            counts[char] = counts.get(char, 0) + 1
+            if counts[char] > most_present_count:
+                most_present_char = char
+                most_present_count = counts[char]
+            window_size = r - l + 1
+            if window_size - most_present_count > k:
+                counts[s[l]] -= 1
+                l += 1
+                window_size -= 1
+            max_length = max(max_length, window_size)
+        return max_length
+
+
 s = Solution()
 # st = "ABAB"
 # k = 2
-st = "ABABCCABCC"
-k = 2
+# st = "ABABCCABCC"
+# k = 2
+st = "AABABBA"
+k = 1
 print(s.characterReplacement(st, k))
 
 # Algo, iterate through the string
