@@ -18,6 +18,7 @@ class Solution:
         while projects_left:
             best_project = None
             best_deal = 0
+            max_heap = []
             while heap and heap[0][0] <= current_capital:
                 c, p = heapq.heappop(heap)
                 if p > best_deal:
@@ -37,6 +38,29 @@ class Solution:
                 heapq.heappush(heap, p)
             not_chosen_projects = []
         return max_capital
+
+
+class Solution:
+    def findMaximizedCapital(
+        self, k: int, w: int, profits: list[int], capital: list[int]
+    ) -> int:
+        current_capital = w
+        projects_left = k
+
+        heap = [(c, p) for c, p in zip(capital, profits)]
+        heapq.heapify(heap)
+        max_heap = []
+
+        while projects_left:
+            while heap and heap[0][0] <= current_capital:
+                c, p = heapq.heappop(heap)
+                heapq.heappush(max_heap, (-p, c))
+            if not max_heap:
+                return current_capital
+            pro, _ = heapq.heappop(max_heap)
+            current_capital += -pro
+            projects_left -= 1
+        return current_capital
 
 
 # While enough projects
