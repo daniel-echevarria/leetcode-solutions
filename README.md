@@ -5,7 +5,7 @@ I solve these challenges to improve my **algorithmic thinking, problem-solving s
 
 ## 🛠 Languages Used
 - **Python** (primary)
-- JavaScript (Node.js)
+- JavaScript
 - Ruby
 
 ## 📂 Structure
