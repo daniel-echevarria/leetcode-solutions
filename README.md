@@ -14,5 +14,3 @@ Problems are organized by programming language, with each file named after the L
   - `two_sum.py`
 - JavaScript/
   - `two-sum.js`
-- Ruby/
-  - `two_sum.rb`
