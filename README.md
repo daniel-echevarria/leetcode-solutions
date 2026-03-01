@@ -1,21 +1,19 @@
 # LeetCode Solutions
 
-This repository contains my solutions to LeetCode problems in **JavaScript** and **Ruby**.  
-I solve these problems to improve my **algorithmic thinking, problem-solving skills, and coding efficiency**.
+This repository contains my personal solutions to **LeetCode** problems.  
+I solve these challenges to improve my **algorithmic thinking, problem-solving skills, and coding efficiency**.
 
 ## 🛠 Languages Used
+- **Python** (primary)
 - JavaScript (Node.js)
 - Ruby
 
 ## 📂 Structure
-Each problem is stored in its respective language folder.
+Problems are organized by programming language, with each file named after the LeetCode problem:
 
-## 🚀 How to Run
-### JavaScript
-```sh
-node JavaScript/two-sum.js
-``` 
-### Ruby
-```sh
-ruby Ruby/two_sum.rb
-```
+- Python/
+  - `two_sum.py`
+- JavaScript/
+  - `two-sum.js`
+- Ruby/
+  - `two_sum.rb`
