@@ -6,7 +6,6 @@ I solve these challenges to improve my **algorithmic thinking, problem-solving s
 ## 🛠 Languages Used
 - **Python** (primary)
 - JavaScript
-- Ruby
 
 ## 📂 Structure
 Problems are organized by programming language, with each file named after the LeetCode problem:
