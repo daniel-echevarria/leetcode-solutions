@@ -21,6 +21,37 @@ class Solution:
         return min_count
 
 
+class Solution:
+    def minDistance(self, word1: str, word2: str) -> int:
+        if len(word1) > len(word2):
+            word1, word2 = word2, word1
+
+        min_distance = float("inf")
+
+        def helper(w1, w2, count=0):
+            nonlocal min_distance
+            if not w1:
+                min_distance = min(min_distance, count + len(w2))
+                return
+            if not w2:
+                min_distance = min(min_distance, count + len(w1))
+                return
+
+            if w1[0] == w2[0]:
+                helper(w1[1:], w2[1:], count)
+
+            # replace
+            helper(w1[1:], w2[1:], count + 1)
+            # insert
+            helper(w1, w2[1:], count + 1)
+            # delelte
+            helper(w1[1:], w2, count + 1)
+
+        helper(word1, word2)
+
+        return min_distance
+
+
 s = Solution()
 word1 = "horse"
 word2 = "ros"
