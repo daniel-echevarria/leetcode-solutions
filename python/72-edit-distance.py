@@ -52,6 +52,32 @@ class Solution:
         return min_distance
 
 
+class Solution:
+    def minDistance(self, word1: str, word2: str) -> int:
+        memo = {}
+
+        m, n = len(word1), len(word2)
+
+        def dp(i, j):
+            if i == m:
+                return n - j
+            if j == n:
+                return m - i
+
+            if (i, j) in memo:
+                return memo[(i, j)]
+
+            if word1[i] == word2[j]:
+                ans = dp(i + 1, j + 1)
+            else:
+                ans = 1 + min(dp(i + 1, j), dp(i, j + 1), dp(i + 1, j + 1))
+
+            memo[i, j] = ans
+            return ans
+
+        return dp(0, 0)
+
+
 s = Solution()
 word1 = "horse"
 word2 = "ros"
