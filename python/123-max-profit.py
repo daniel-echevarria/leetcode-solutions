@@ -20,6 +20,36 @@ class Solution:
         return sell2
 
 
+class Solution:
+    def maxProfit(self, prices: list[int]) -> int:
+        memo = {}
+
+        def dp(i, active=False, transactions=2):
+            if transactions == 0 or i == len(prices):
+                return 0
+
+            if (i, active, transactions) in memo:
+                return memo[(i, active, transactions)]
+
+            # skip today
+            best_profit = dp(i + 1, active, transactions)
+
+            if active:
+                # sell_today
+                best_profit = max(
+                    best_profit, prices[i] + dp(i + 1, False, transactions - 1)
+                )
+            else:
+                # buy_today
+                best_profit = max(
+                    best_profit, -prices[i] + dp(i + 1, True, transactions)
+                )
+            memo[(i, active, transactions)] = best_profit
+            return best_profit
+
+        return dp(0)
+
+
 s = Solution()
 prices = [3, 3, 5, 0, 0, 3, 1, 4]
 print(s.maxProfit(prices))
