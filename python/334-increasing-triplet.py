@@ -20,6 +20,22 @@ class Solution:
         return smallest < nums[l] < biggest
 
 
+class Solution:
+    def increasingTriplet(self, nums: list[int]) -> bool:
+        n = len(nums)
+        min_suffix = [0] * n
+        min_so_far = float("inf")
+        for i in range(n):
+            min_so_far = min(nums[i], min_so_far)
+            min_suffix[i] = min_so_far
+        max_so_far = float("-inf")
+        for i in range(n - 1, -1, -1):
+            max_so_far = max(max_so_far, nums[i])
+            if min_suffix[i] < nums[i] < max_so_far:
+                return True
+        return False
+
+
 # nums = [5, 4, 3, 2, 1]
 # nums = [2, 1, 5, 0, 4, 6]
 nums = [1, 5, 0, 4, 1, 3]
@@ -33,3 +49,10 @@ print(s.increasingTriplet(nums))
 # if at any point the next value is between the min and max
 # return true
 # if l and r are equal return false
+
+# second take:
+# build an array of the min so far coming from the left
+# then build a max so far coming from the right
+# if at any point the current value is between the min so far value for that index
+# and the max so far, return true
+# after building both arrays return false
