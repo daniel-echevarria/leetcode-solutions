@@ -99,7 +99,7 @@ class Solution:
             for n in str(count):
                 w += 1
                 chars[w] = n
-        return w
+        return w + 1
 
 
 s = Solution()
