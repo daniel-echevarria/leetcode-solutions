@@ -1,16 +1,13 @@
 class Solution:
     def maxVowels(self, s: str, k: int) -> int:
         vowels = set("aeiou")
-        count = sum([c in vowels for c in s[:k]])
+        count = sum(c in vowels for c in s[:k])
         max_count = count
-        l, r = 0, k
-        while r < len(s):
-            if s[l] in vowels:
+        for r in range(k, len(s)):
+            if s[r - k] in vowels:
                 count -= 1
             if s[r] in vowels:
                 count += 1
-            l += 1
-            r += 1
             max_count = max(max_count, count)
         return max_count
 
