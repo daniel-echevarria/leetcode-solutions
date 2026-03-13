@@ -1,3 +1,6 @@
+from collections import defaultdict
+
+
 class Solution:
     def maxOperations(self, nums: list[int], k: int) -> int:
         nums.sort()
@@ -12,6 +15,19 @@ class Solution:
                 r -= 1
             else:
                 l += 1
+        return count
+
+
+class Solution:
+    def maxOperations(self, nums: list[int], k: int) -> int:
+        seen = defaultdict(int)
+        count = 0
+        for n in nums:
+            if seen[n] > 0:
+                seen[n] -= 1
+                count += 1
+            else:
+                seen[k - n] += 1
         return count
 
 
