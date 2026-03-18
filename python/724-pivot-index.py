@@ -24,10 +24,12 @@ class Solution:
         return -1
 
 
-s = Solution()
 # nums = [1, 7, 3, 6, 5, 6]
+nums = [-1, -1, -1, 1, 1, 1]
 # nums = [2, 1, -1]
-nums = [3, -3, 5]
+s = Solution()
+# nums = [3, -3, 5]
+# nums = [0, 0]
 print(s.pivotIndex(nums))
 
 # Make a prefix sum array
