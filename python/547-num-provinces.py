@@ -11,6 +11,7 @@ def createGraph(isConnected):
                 connected_cities[i] = set([j])
     return connected_cities
 
+
 def dfs(node, graph, visited):
     if node in visited:
         return
@@ -31,19 +32,13 @@ class Solution:
         for city in range(n):
             if city in visited:
                 continue
-            provinces_count +=1
+            provinces_count += 1
             dfs(city, connections, visited)
-        return(provinces_count)
+        return provinces_count
+
 
 s = Solution()
-s.findCircleNum([[1,1,0],[1,1,0],[0,0,1]])
-
-
-
-
-
-
-
+s.findCircleNum([[1, 1, 0], [1, 1, 0], [0, 0, 1]])
 
 
 #  Declare a variable n that gets isConnected length
@@ -64,3 +59,26 @@ s.findCircleNum([[1,1,0],[1,1,0],[0,0,1]])
 #  otherwise it adds the node anc calls dfs in all the neighbors
 
 #  finally return numProvinces
+
+
+class Solution:
+    def findCircleNum(self, isConnected: List[List[int]]) -> int:
+        visited = set()
+
+        def dfs(city):
+            for neighbor, connected in enumerate(isConnected[city]):
+                if connected and neighbor not in visited:
+                    visited.add(neighbor)
+                    dfs(neighbor)
+
+        provinces = 0
+        for i in range(len(isConnected)):
+            if i not in visited:
+                dfs(i)
+                provinces += 1
+        return provinces
+
+
+s = Solution()
+isco = [[1, 1, 0], [1, 1, 0], [0, 0, 1]]
+print(s.findCircleNum(isco))
