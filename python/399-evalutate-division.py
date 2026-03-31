@@ -83,6 +83,36 @@ class Solution:
         return res
 
 
+class Solution:
+    def calcEquation(
+        self, equations: list[list[str]], values: list[float], queries: list[list[str]]
+    ) -> list[float]:
+        adj = defaultdict(list)
+        for i in range(len(equations)):
+            a, b = equations[i]
+            value = values[i]
+            adj[a].append((b, value))
+            adj[b].append((a, 1 / value))
+
+        def dfs(start, dest, visited):
+            if start not in adj or dest not in adj:
+                return -1
+            if start == dest:
+                return 1
+            visited.add(start)
+            for neighbor, weight in adj[start]:
+                if neighbor not in visited:
+                    product = dfs(neighbor, dest, visited)
+                    if product != -1:
+                        return product * weight
+            return -1
+
+        res = []
+        for c, d in queries:
+            res.append(dfs(c, d, set()))
+        return res
+
+
 # equ = [["a", "b"], ["c", "d"]]
 # vals = [1.0, 1.0]
 # queries = [["a", "c"], ["b", "d"], ["b", "a"], ["d", "c"]]
@@ -91,4 +121,4 @@ vals = [0.5]
 queries = [["a", "b"], ["b", "a"], ["a", "c"], ["x", "y"]]
 
 s = Solution()
-s.calcEquation(equ, vals, queries)
+print(s.calcEquation(equ, vals, queries))
