@@ -10,9 +10,18 @@ class Solution:
         return -biggest
 
 
+class Solution:
+    def findKthLargest(self, nums: list[int], k: int) -> int:
+        heap = [-x for x in nums]
+        heapq.heapify(heap)
+        for _ in range(k - 1):
+            heapq.heappop(heap)
+        return -heapq.heappop(heap)
+
+
 s = Solution()
-# nums = [3, 2, 1, 5, 6, 4]
-# k = 2
-nums = [3, 2, 3, 1, 2, 4, 5, 5, 6]
-k = 4
+nums = [3, 2, 1, 5, 6, 4]
+k = 2
+# nums = [3, 2, 3, 1, 2, 4, 5, 5, 6]
+# k = 4
 print(s.findKthLargest(nums, k))
