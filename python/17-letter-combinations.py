@@ -22,3 +22,36 @@ class Solution:
     def letterCombinations(self, digits: str) -> list[str]:
         self.helper(digits)
         return self.results
+
+
+class Solution:
+    def letterCombinations(self, digits: str) -> list[str]:
+        phone = {}
+        phone["2"] = ["a", "b", "c"]
+        phone["3"] = ["d", "e", "f"]
+        phone["4"] = ["g", "h", "i"]
+        phone["5"] = ["j", "k", "l"]
+        phone["6"] = ["m", "n", "o"]
+        phone["7"] = ["p", "q", "r", "s"]
+        phone["8"] = ["t", "u", "v"]
+        phone["9"] = ["w", "x", "y", "z"]
+
+        res = []
+
+        def helper(path=""):
+            idx = len(path)
+            if idx == len(digits):
+                res.append(path)
+                return
+
+            for char in phone[digits[idx]]:
+                helper(path + char)
+
+        helper()
+
+        return res
+
+
+digits = "23"
+s = Solution()
+print(s.letterCombinations(digits))
