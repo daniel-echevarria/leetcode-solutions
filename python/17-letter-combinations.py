@@ -52,6 +52,38 @@ class Solution:
         return res
 
 
+class Solution:
+    def letterCombinations(self, digits: str) -> list[str]:
+        phone = {
+            "2": "abc",
+            "3": "def",
+            "4": "ghi",
+            "5": "jkl",
+            "6": "mno",
+            "7": "pqrs",
+            "8": "tuv",
+            "9": "wxyz",
+        }
+
+        n = len(digits)
+
+        res = []
+        path = []
+
+        def backtrack(i):
+            if i == n:
+                res.append("".join(path))
+                return
+
+            for char in phone[digits[i]]:
+                path.append(char)
+                backtrack(i + 1)
+                path.pop()
+
+        backtrack(0)
+        return res
+
+
 digits = "23"
 s = Solution()
 print(s.letterCombinations(digits))
