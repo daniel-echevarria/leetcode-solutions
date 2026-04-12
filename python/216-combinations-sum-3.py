@@ -4,17 +4,20 @@ class Solution:
         res = []
         path = []
 
-        def backtrack(i):
+        def backtrack(start, total):
             if len(path) == k:
-                if sum(path) == n:
+                if total == n:
                     res.append(path.copy())
                 return
-            for j in range(i + 1, 10):
+
+            for j in range(start, 10):
+                if total + j > n:
+                    break
                 path.append(j)
-                backtrack(j)
+                backtrack(j + 1, total + j)
                 path.pop()
 
-        backtrack(0)
+        backtrack(1, 0)
         return res
 
 
