@@ -27,6 +27,17 @@ class Solution:
             dp[i] = max
 
 
+class Solution:
+    def maxProfit(self, prices: list[int], fee: int) -> int:
+        hold = -prices[0]
+        profit = 0
+
+        for p in range(1, len(prices)):
+            hold = max(hold, profit - prices[p])
+            profit = max(profit, hold + prices[p] - fee)
+        return profit
+
+
 # prices = [1, 3, 2, 8, 4, 9]
 # fee = 2
 prices = [1, 3, 7, 5, 10, 3]
