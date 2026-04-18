@@ -47,7 +47,6 @@ class Trie:
     def insert(self, word: str) -> None:
         node = self.root
         for char in word:
-            print(node.children)
             if char in node.children:
                 node = node.children[char]
                 continue
@@ -56,15 +55,22 @@ class Trie:
         node.is_end = True
 
     def search(self, word: str) -> bool:
-        node = self.children
+        node = self.root
         for char in word:
-            if char not in node:
+            if char not in node.children:
                 return False
             else:
-                node = node[char]
-        return True
+                node = node.children[char]
+        return node.is_end
 
-    # def startsWith(self, prefix: str) -> bool:
+    def startsWith(self, prefix: str) -> bool:
+        node = self.root
+        for char in prefix:
+            if char not in node.children:
+                return False
+            else:
+                node = node.children[char]
+        return True
 
 
 # Your Trie object will be instantiated and called as such:
