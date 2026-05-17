@@ -31,6 +31,31 @@ class Solution:
         return sum([collection_m, collection_p, collection_g])
 
 
+class Solution:
+    def garbageCollection(self, garbage: list[str], travel: list[int]) -> int:
+        last_g = last_p = last_m = 0
+
+        for i in range(len(garbage)):
+            if "G" in garbage[i]:
+                last_g = i
+            if "P" in garbage[i]:
+                last_p = i
+            if "M" in garbage[i]:
+                last_m = i
+
+        collection_time = len("".join(garbage))
+        travel_time = [0]
+        for j in range(len(travel)):
+            travel_time.append(travel[j] + travel_time[-1])
+
+        return (
+            travel_time[last_g]
+            + travel_time[last_p]
+            + travel_time[last_m]
+            + collection_time
+        )
+
+
 garbage = ["G", "P", "GP", "GG"]
 travel = [2, 4, 3]
 
