@@ -29,3 +29,24 @@ class Solution:
                         copy_queue.append(neighbor_copy)
                         main_queue.append(n)
         return new_root
+
+
+class Solution:
+    def cloneGraph(self, node: Optional["Node"]) -> Optional["Node"]:
+        if not node:
+            return
+
+        clone_map = {node: Node(node.val)}
+
+        q = deque([node])
+
+        while q:
+            original = q.popleft()
+
+            for n in original.neighbors:
+                if n not in clone_map:
+                    clone_map[n] = Node(n.val)
+                    q.append(n)
+
+                clone_map[original].neighbors.append(clone_map[n])
+        return clone_map[node]
