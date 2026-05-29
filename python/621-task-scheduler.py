@@ -28,6 +28,47 @@ class Solution:
         return len(sequence)
 
 
+import heapq
+
+
+class Solution:
+    def leastInterval(self, tasks: list[str], n: int) -> int:
+        counts = defaultdict(int)
+        for t in tasks:
+            counts[t] += 1
+        heap = []
+        for key, val in counts.items():
+            heapq.heappush(heap, (-val, key))
+
+        res = []
+
+        while heap:
+            turn = []
+            distance = n
+            for _ in range(distance + 1):
+                if heap:
+                    count, task = heapq.heappop(heap)
+                    count += 1
+                    if count:
+                        turn.append((count, task))
+                    res.append(task)
+                else:
+                    if not turn:
+                        continue
+                    res.append("idle")
+            for t in turn:
+                heapq.heappush(heap, t)
+        return len(res)
+
+        # Algo
+        # create a counts dict
+        # out of that counts dict build a maxHeap based on the counts
+        # we will iterate through a different task so long as we don't have the distance
+        # we need, we will add iddles until then if needed
+        # then we will use the task with the biggest count in order
+        # (the key idea is that we want to start the tasks with more counts asap)
+
+
 # tasks = ["A", "A", "A", "B", "B", "B"]
 # n = 2
 
