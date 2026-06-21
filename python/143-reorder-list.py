@@ -8,3 +8,28 @@ class Solution:
         """
         Do not return anything, modify head in-place instead.
         """
+        if not head:
+            return
+
+        slow = fast = head
+        while fast and fast.next:
+            slow = slow.next
+            fast = fast.next.next
+
+        node = slow
+        prev = None
+        while node:
+            temp = node
+            node = node.next
+            temp.next = prev
+            prev = temp
+
+        top = head
+        bot = prev
+        while bot.next:
+            temp = top.next
+            top.next = bot
+            temp2 = bot.next
+            bot.next = temp
+            top = temp
+            bot = temp2
