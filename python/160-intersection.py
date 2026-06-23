@@ -43,3 +43,15 @@ class Solution:
 
 # make both traversals, if one is finish, start counting how much longer the other one is
 # start from that point on with the second one, return the moment they are the same
+class Solution:
+    def getIntersectionNode(
+        self, headA: ListNode, headB: ListNode
+    ) -> Optional[ListNode]:
+
+        a, b = headA, headB
+
+        while a or b:
+            if a == b:
+                return a
+            a = a.next if a else headB
+            b = b.next if b else headA
