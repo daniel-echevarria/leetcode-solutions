@@ -27,8 +27,31 @@ class Solution:
         )
 
 
-s = Solution()
-print(s.nextGreaterElement(1342))
+class Solution:
+    def nextGreaterElement(self, n: int) -> int:
+        n = list(str(n))
+
+        swap_position = None
+        for i in range(len(n) - 1, 0, -1):
+            if n[i] > n[i - 1]:
+                swap_position = i - 1
+                break
+
+        if swap_position is None:
+            return -1
+
+        for i in range(len(n) - 1, -1, -1):
+            if n[i] > n[swap_position]:
+                n[i], n[swap_position] = n[swap_position], n[i]
+                break
+        n[swap_position + 1 :] = reversed(n[swap_position + 1 :])
+        res = int("".join(n))
+
+        if res > 2147483647:
+            return -1
+        else:
+            return res
+
 
 # Check the last int in the number
 # check if it's bigger than any number to the left
@@ -38,4 +61,5 @@ print(s.nextGreaterElement(1342))
 # sort the rest
 # return the joined version
 
-32413
+s = Solution()
+print(s.nextGreaterElement(12))
