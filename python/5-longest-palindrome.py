@@ -22,3 +22,69 @@ class Solution:
 
                 if isPalindrome(i, j):
                     return s[i : j + 1]
+
+
+class Solution:
+    def longestPalindrome(self, s: str) -> str:
+        n = len(s)
+        res = ""
+
+        def calculateMax(i, j):
+            nonlocal res
+            while i >= 0 and j < len(s) and s[i] == s[j]:
+                if j - i + 1 > len(res):
+                    res = s[i : j + 1]
+                i -= 1
+                j += 1
+
+        for i in range(n):
+            calculateMax(i, i)
+            calculateMax(i, i + 1)
+        return res
+
+
+class Solution:
+    def longestPalindrome(self, s: str) -> str:
+        n = len(s)
+
+        res = ""
+
+        def calculateLongest(i, j):
+            nonlocal res
+            while i >= 0 and j < n and s[i] == s[j]:
+                # the plus one is to count single letters
+                if j - i + 1 > len(res):
+                    res = s[i : j + 1]
+                i -= 1
+                j += 1
+
+        for i in range(n):
+            calculateLongest(i, i)
+            calculateLongest(i, i + 1)
+
+        return res
+
+
+class Solution:
+    def longestPalindrome(self, s: str) -> str:
+        n = len(s)
+        res = ""
+
+        def checkLongest(i, j):
+            nonlocal res
+            while i >= 0 and j < n and s[i] == s[j]:
+                if j - i + 1 > len(res):
+                    res = s[i : j + 1]
+                i -= 1
+                j += 1
+
+        for i in range(n):
+            checkLongest(i, i)
+            checkLongest(i, i + 1)
+
+        return res
+
+
+st = "babad"
+s = Solution()
+print(s.longestPalindrome(st))
