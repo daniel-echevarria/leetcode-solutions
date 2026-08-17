@@ -85,6 +85,46 @@ class Solution:
         return res
 
 
+class Solution:
+    def longestPalindrome(self, s: str) -> str:
+        n = len(s)
+        res = ""
+
+        def calcLongest(i, j):
+            nonlocal res
+            while i >= 0 and j < n and s[i] == s[j]:
+                if len(res) < j - i + 1:
+                    res = s[i : j + 1]
+                i -= 1
+                j += 1
+
+        for i in range(n):
+            calcLongest(i, i)
+            calcLongest(i, i + 1)
+
+        return res
+
+
+class Solution:
+    def longestPalindrome(self, s: str) -> str:
+        n = len(s)
+        res = ""
+
+        def expand(i, j):
+            nonlocal res
+            while i >= 0 and j < n and s[i] == s[j]:
+                if len(res) < j - i + 1:
+                    res = s[i : j + 1]
+                i -= 1
+                j += 1
+
+        for i in range(n):
+            expand(i, i)
+            expand(i, i + 1)
+
+        return res
+
+
 st = "babad"
 s = Solution()
 print(s.longestPalindrome(st))
