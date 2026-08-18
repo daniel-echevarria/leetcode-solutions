@@ -20,3 +20,25 @@ class Solution:
             dummy = dummy.next
 
         return dummy
+
+
+class Solution:
+    def removeNthFromEnd(self, head: Optional[ListNode], n: int) -> Optional[ListNode]:
+        dummy = head
+        slow = fast = head
+        s_pos = f_pos = 0
+        while fast:
+            fast = fast.next
+            f_pos += 1
+            if f_pos % n == 0:
+                slow = slow.next
+                s_pos += 1
+
+        goal = f_pos - n
+        while slow:
+            if s_pos == goal - 1:
+                slow.next = slow.next.next
+                return dummy
+            slow = slow.next
+            s_pos += 1
+        return dummy
