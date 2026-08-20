@@ -19,9 +19,40 @@ class Solution:
         return water
 
 
+class Solution:
+    def trap(self, height: list[int]) -> int:
+        n = len(height)
+        trapped_water = l = 0
+
+        for i in range(1, n):
+            if height[i] < height[l]:
+                continue
+
+            trapped_water += min(height[l], height[i]) * (i - l - 1)
+            l += 1
+            while l < i:
+                trapped_water -= height[l]
+                l += 1
+
+        r = n - 1
+        for j in range(n - 2, l - 1, -1):
+            if height[j] < height[r]:
+                continue
+
+            trapped_water += min(height[r], height[j]) * (max(r - j - 1, 0))
+            r -= 1
+            while r > j:
+                trapped_water -= height[r]
+                r -= 1
+
+        return trapped_water
+
+
 s = Solution()
-height = [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1]
-s.trap(height)
+# height = [0, 1, 0, 2, 1, 0, 1, 3, 2, 1, 2, 1]
+height = [4, 2, 0, 3, 2, 5]
+# height = [2, 0, 2]
+print(s.trap(height))
 
 
 # Algo
