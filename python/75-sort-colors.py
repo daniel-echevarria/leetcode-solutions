@@ -18,7 +18,27 @@ class Solution:
         return nums
 
 
+class Solution:
+    def sortColors(self, nums: list[int]) -> None:
+        n = len(nums)
+        z, t = 0, n - 1
+
+        i = 0
+        while i <= t:
+            if nums[i] == 0:
+                nums[i], nums[z] = nums[z], nums[i]
+                i += 1
+                z += 1
+            elif nums[i] == 2:
+                nums[i], nums[t] = nums[t], nums[i]
+                t -= 1
+            else:
+                i += 1
+        return nums
+
+
 nums = [2, 0, 2, 1, 1, 0]
 # nums = [2, 0, 1]
+# nums = [1, 2, 0]
 s = Solution()
 print(s.sortColors(nums))
