@@ -25,3 +25,32 @@ class Solution:
                 return fast
             fast = fast.next
             slow = slow.next
+
+
+class Solution:
+    def detectCycle(self, head: Optional[ListNode]) -> Optional[ListNode]:
+        if not head:
+            return None
+
+        slow = fast = head_copy = head
+
+        while fast and fast.next:
+            fast = fast.next.next
+            slow = slow.next
+            if slow == fast:
+                break
+
+        if not fast or not fast.next:
+            return None
+
+        fast = head_copy
+
+        while True:
+            if fast == slow:
+                return slow
+            fast = fast.next
+            slow = slow.next
+
+
+# [3, 2, 0, -4]
+[1, 2]
