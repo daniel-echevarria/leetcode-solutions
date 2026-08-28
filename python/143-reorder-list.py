@@ -33,3 +33,39 @@ class Solution:
             bot.next = temp
             top = temp
             bot = temp2
+
+
+class Solution:
+    def reorderList(self, head: Optional[ListNode]) -> None:
+        slow = fast = head
+        # find mid
+        while fast.next and fast.next.next:
+            slow = slow.next
+            fast = fast.next.next
+
+        mid = slow.next
+        slow.next = None
+
+        # reverse second half
+        prev = None
+        while mid:
+            temp = mid
+            mid = mid.next
+            temp.next = prev
+            prev = temp
+
+        left = head
+        right = prev
+        hold = right
+
+        while left and right:
+            temp = left.next
+            left.next = right
+            left = temp
+            hold = right.next
+            right.next = left
+            right = hold
+        return head
+
+
+[1, 2, 3, 4]
