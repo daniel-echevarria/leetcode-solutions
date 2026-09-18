@@ -27,6 +27,51 @@ class Solution:
         return monostack
 
 
+class Solution:
+    def maxNumber(self, nums1: list[int], nums2: list[int], k: int) -> list[int]:
+
+        def max_sub(nums, length):
+            sub = []
+            remove = len(nums) - length
+
+            for num in nums:
+                while sub and remove > 0 and sub[-1] < num:
+                    sub.pop()
+                    remove -= 1
+                sub.append(num)
+
+            return sub[:length]
+
+        def merge(a, b):
+            res = []
+
+            while a and b:
+                if a > b:
+                    res.append(a.pop(0))
+                else:
+                    res.append(b.pop(0))
+            res.extend(a)
+            res.extend(b)
+            return res
+
+        start = max(0, k - len(nums2))
+        end = min(k, len(nums1))
+
+        best = []
+
+        for k1 in range(start, end + 1):
+            k2 = k - k1
+
+            max_sub1 = max_sub(nums1, k1)
+            max_sub2 = max_sub(nums2, k2)
+
+            candidate = merge(max_sub1, max_sub2)
+
+            best = max(best, candidate)
+
+        return best
+
+
 # nums1 = [3, 4, 6, 5]
 # nums2 = [9, 1, 2, 5, 8, 3]
 # k = 5
