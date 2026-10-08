@@ -5,7 +5,7 @@ class Solution:
         l, r = 0, n - 1
         max_left = max_right = 0
 
-        while l <= r:
+        while l < r:
             if max_left < max_right:
                 max_left = max(height[l], max_left)
                 water += max_left - height[l]
