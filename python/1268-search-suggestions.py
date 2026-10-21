@@ -22,19 +22,25 @@ class Trie:
         self.res = []
         node = self.root
         for char in prefix:
+            if len(self.res) == 3:
+                return self.res
             if char not in node.children:
                 return []
-            if node.is_end:
-                self.res.append(current_word)
             node = node.children[char]
             current_word += char
-        if node.is_end:
-            self.res.append(current_word)
+            if node.is_end:
+                self.res.append(current_word)
+
         self.getWords(node, prefix)
-        return sorted(self.res)[:3]
+        return self.res
 
     def getWords(self, node, current_word):
+        if len(self.res) == 3:
+            return
+
         for char in node.children:
+            if len(self.res) == 3:
+                return
             if node.children[char].is_end:
                 self.res.append(current_word + char)
             self.getWords(node.children[char], current_word + char)
@@ -45,7 +51,7 @@ class Solution:
         self, products: list[str], searchWord: str
     ) -> list[list[str]]:
         trie = Trie()
-        for p in products:
+        for p in sorted(products):
             trie.insertWord(p)
 
         res = []
